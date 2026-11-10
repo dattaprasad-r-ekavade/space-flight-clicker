@@ -139,43 +139,43 @@ Tick the **Done** box here when the Lead has committed the card.
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T001](tasks/T001.md) | Project skeleton | Lead | none |
-| [ ] | [T002](tasks/T002.md) | Test runner | godot-builder | T001 |
-| [ ] | [T003](tasks/T003.md) | Verify script | godot-builder | T002 |
-| [ ] | [T004](tasks/T004.md) | Autoload stubs and EventBus | godot-builder | T003 |
+| [x] | [T001](tasks/T001.md) | Project skeleton | Lead | none |
+| [x] | [T002](tasks/T002.md) | Test runner | godot-builder | T001 |
+| [x] | [T003](tasks/T003.md) | Verify script | godot-builder | T002 |
+| [x] | [T004](tasks/T004.md) | Autoload stubs and EventBus | godot-builder | T003 |
 
 ### Phase 1 — Core logic
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T010](tasks/T010.md) | Division data | godot-builder | T004 |
-| [ ] | [T011](tasks/T011.md) | Economy formulas | godot-builder | T010 |
-| [ ] | [T012](tasks/T012.md) | Number and height formatter | godot-builder | T002 |
-| [ ] | [T013a](tasks/T013a.md) | GameState: state, buying, unlocking | godot-builder | T011 |
-| [ ] | [T013b](tasks/T013b.md) | Launch cycle: pump, launch, tick | godot-builder | T013a |
-| [ ] | [T013c](tasks/T013c.md) | Managers, tap speed-up, income rate | godot-builder | T013b |
-| [ ] | [T014](tasks/T014.md) | Research | godot-builder | T013c |
-| [ ] | [T015](tasks/T015.md) | Save and load | godot-builder | T013c |
-| [ ] | [T016](tasks/T016.md) | Offline earnings | godot-builder | T015 |
-| [ ] | [T017](tasks/T017.md) | Economy simulator | godot-builder | T014, T016 |
-| [ ] | [T018](tasks/T018.md) | Tune the economy | Lead | T017 |
+| [x] | [T010](tasks/T010.md) | Division data | godot-builder | T004 |
+| [x] | [T011](tasks/T011.md) | Economy formulas | godot-builder | T010 |
+| [x] | [T012](tasks/T012.md) | Number and height formatter | godot-builder | T002 |
+| [x] | [T013a](tasks/T013a.md) | GameState: state, buying, unlocking | godot-builder | T011 |
+| [x] | [T013b](tasks/T013b.md) | Launch cycle: pump, launch, tick | godot-builder | T013a |
+| [x] | [T013c](tasks/T013c.md) | Managers, tap speed-up, income rate | godot-builder | T013b |
+| [x] | [T014](tasks/T014.md) | Research | godot-builder | T013c |
+| [x] | [T015](tasks/T015.md) | Save and load | godot-builder | T013c |
+| [x] | [T016](tasks/T016.md) | Offline earnings | godot-builder | T015 |
+| [x] | [T017](tasks/T017.md) | Economy simulator | godot-builder | T014, T016 |
+| [x] | [T018](tasks/T018.md) | Tune the economy | Lead | T017 |
 
 ### Phase 2 — Playable UI (grey boxes)
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T020a](tasks/T020a.md) | Theme and font | godot-builder | T004 |
-| [ ] | [T020b](tasks/T020b.md) | UI kit controls | godot-builder | T020a |
-| [ ] | [T021](tasks/T021.md) | Main layout | godot-builder | T020b |
-| [ ] | [T022](tasks/T022.md) | HUD | godot-builder | T021, T012 |
-| [ ] | [T023](tasks/T023.md) | Pump and launch controls | godot-builder | T022, T013c |
-| [ ] | [T024](tasks/T024.md) | Divisions tab | godot-builder | T023 |
-| [ ] | [T025](tasks/T025.md) | Managers tab | godot-builder | T024 |
-| [ ] | [T026](tasks/T026.md) | Research tab | godot-builder | T024, T014 |
-| [ ] | [T027](tasks/T027.md) | Popup system and offline popup | godot-builder | T022, T016 |
+| [x] | [T020a](tasks/T020a.md) | Theme and font | godot-builder | T004 |
+| [x] | [T020b](tasks/T020b.md) | UI kit controls | godot-builder | T020a |
+| [x] | [T021](tasks/T021.md) | Main layout | godot-builder | T020b |
+| [x] | [T022](tasks/T022.md) | HUD | godot-builder | T021, T012 |
+| [x] | [T023](tasks/T023.md) | Pump and launch controls | godot-builder | T022, T013c |
+| [x] | [T024](tasks/T024.md) | Divisions tab | godot-builder | T023 |
+| [x] | [T025](tasks/T025.md) | Managers tab | godot-builder | T024 |
+| [x] | [T026](tasks/T026.md) | Research tab | godot-builder | T024, T014 |
+| [x] | [T027](tasks/T027.md) | Popup system and offline popup | godot-builder | T022, T016 |
 | [ ] | [T028](tasks/T028.md) | Stage-unlock popup and stage switching | godot-builder | T027 |
 | [ ] | [T029](tasks/T029.md) | Settings and More tab | godot-builder | T027 |
-| [ ] | [T030](tasks/T030.md) | Debug panel | godot-builder | T027 |
+| [x] | [T030](tasks/T030.md) | Debug panel | godot-builder | T027 |
 | [ ] | [T031](tasks/T031.md) | Screenshot tool | godot-builder | T030 |
 
 **Gate 2:** Human plays from a new save to stage 3 on desktop. Lead reviews screenshots.
@@ -184,32 +184,32 @@ Tick the **Done** box here when the Lead has committed the card.
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T040](tasks/T040.md) | Blender style library | Lead | none |
-| [ ] | [T041v](tasks/T041v.md) | Vehicle: bottles | blender-artist | T040 |
-| [ ] | [T041s](tasks/T041s.md) | Launch site: bottles | blender-artist | T040 |
-| [ ] | [T042v](tasks/T042v.md) | Vehicle: model_rockets | blender-artist | T040 |
-| [ ] | [T042s](tasks/T042s.md) | Launch site: model_rockets | blender-artist | T040 |
-| [ ] | [T043v](tasks/T043v.md) | Vehicle: sounding | blender-artist | T040 |
-| [ ] | [T043s](tasks/T043s.md) | Launch site: sounding | blender-artist | T040 |
-| [ ] | [T044v](tasks/T044v.md) | Vehicle: orbital | blender-artist | T040 |
-| [ ] | [T044s](tasks/T044s.md) | Launch site: orbital | blender-artist | T040 |
-| [ ] | [T045v](tasks/T045v.md) | Vehicle: station | blender-artist | T040 |
-| [ ] | [T045s](tasks/T045s.md) | Launch site: station | blender-artist | T040 |
-| [ ] | [T046v](tasks/T046v.md) | Vehicle: moon | blender-artist | T040 |
-| [ ] | [T046s](tasks/T046s.md) | Launch site: moon | blender-artist | T040 |
-| [ ] | [T047v](tasks/T047v.md) | Vehicle: solar | blender-artist | T040 |
-| [ ] | [T047s](tasks/T047s.md) | Launch site: solar | blender-artist | T040 |
-| [ ] | [T048v](tasks/T048v.md) | Vehicle: galaxy | blender-artist | T040 |
-| [ ] | [T048s](tasks/T048s.md) | Launch site: galaxy | blender-artist | T040 |
-| [ ] | [T049v](tasks/T049v.md) | Vehicle: black_hole | blender-artist | T040 |
-| [ ] | [T049s](tasks/T049s.md) | Launch site: black_hole | blender-artist | T040 |
-| [ ] | [T050](tasks/T050.md) | Kid character | blender-artist | T040 |
-| [ ] | [T051](tasks/T051.md) | Memory bottle skins | blender-artist | T041v |
-| [ ] | [T052](tasks/T052.md) | Icon and store art sources | blender-artist | T044v |
+| [x] | [T040](tasks/T040.md) | Blender style library | Lead | none |
+| [x] | [T041v](tasks/T041v.md) | Vehicle: bottles | blender-artist | T040 |
+| [x] | [T041s](tasks/T041s.md) | Launch site: bottles | blender-artist | T040 |
+| [x] | [T042v](tasks/T042v.md) | Vehicle: model_rockets | blender-artist | T040 |
+| [x] | [T042s](tasks/T042s.md) | Launch site: model_rockets | blender-artist | T040 |
+| [x] | [T043v](tasks/T043v.md) | Vehicle: sounding | blender-artist | T040 |
+| [x] | [T043s](tasks/T043s.md) | Launch site: sounding | blender-artist | T040 |
+| [x] | [T044v](tasks/T044v.md) | Vehicle: orbital | blender-artist | T040 |
+| [x] | [T044s](tasks/T044s.md) | Launch site: orbital | blender-artist | T040 |
+| [x] | [T045v](tasks/T045v.md) | Vehicle: station | blender-artist | T040 |
+| [x] | [T045s](tasks/T045s.md) | Launch site: station | blender-artist | T040 |
+| [x] | [T046v](tasks/T046v.md) | Vehicle: moon | blender-artist | T040 |
+| [x] | [T046s](tasks/T046s.md) | Launch site: moon | blender-artist | T040 |
+| [x] | [T047v](tasks/T047v.md) | Vehicle: solar | blender-artist | T040 |
+| [x] | [T047s](tasks/T047s.md) | Launch site: solar | blender-artist | T040 |
+| [x] | [T048v](tasks/T048v.md) | Vehicle: galaxy | blender-artist | T040 |
+| [x] | [T048s](tasks/T048s.md) | Launch site: galaxy | blender-artist | T040 |
+| [x] | [T049v](tasks/T049v.md) | Vehicle: black_hole | blender-artist | T040 |
+| [x] | [T049s](tasks/T049s.md) | Launch site: black_hole | blender-artist | T040 |
+| [x] | [T050](tasks/T050.md) | Kid character | blender-artist | T040 |
+| [x] | [T051](tasks/T051.md) | Memory bottle skins | blender-artist | T041v |
+| [x] | [T052](tasks/T052.md) | Icon and store art sources | blender-artist | T044v |
 
 **Art review (Lead):** open all previews together. Use the Blender MCP `look` tool if needed. Send back any asset that is off-style, with a one-line correction on the card.
-| [ ] | [T053](tasks/T053.md) | Art polish pass | Lead | T055 |
-| [ ] | [T055](tasks/T055.md) | World scene and camera | godot-builder | T021, T041v |
+| [x] | [T053](tasks/T053.md) | Art polish pass | Lead | T055 |
+| [x] | [T055](tasks/T055.md) | World scene and camera | godot-builder | T021, T041v |
 | [ ] | [T056](tasks/T056.md) | Sky gradient per stage | godot-builder | T055 |
 | [ ] | [T057](tasks/T057.md) | Flight animation | godot-builder | T055 |
 | [ ] | [T058](tasks/T058.md) | Particle trails | godot-builder | T057 |

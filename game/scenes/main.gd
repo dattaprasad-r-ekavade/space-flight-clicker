@@ -2,6 +2,7 @@
 ## Root scene. Children are built in code (see conventions.md, "Scene rules").
 ## Top 55 % is the 3D world with the HUD area on top. Bottom 45 % is the tab panel.
 
+const WORLD_SCRIPT: String = "res://scenes/world/world.gd"
 const SKY_COLOR: Color = Color("#87CEEB")
 const CAMERA_POS: Vector3 = Vector3(0.0, 3.0, 12.0)
 const LOOK_AT: Vector3 = Vector3(0.0, 3.0, 0.0)
@@ -76,6 +77,12 @@ func set_tab_content(index: int, content: Control) -> void:
 
 
 func _build_world() -> void:
+	# The real 3D world replaces the placeholder below when its script exists.
+	if ResourceLoader.exists(WORLD_SCRIPT):
+		_world = load(WORLD_SCRIPT).new() as Node3D
+		_world.name = "World"
+		add_child(_world)
+		return
 	_world = Node3D.new()
 	_world.name = "World"
 	add_child(_world)
