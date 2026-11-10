@@ -1,0 +1,6 @@
+{
+	"casual": {"taps_per_second": 3, "session_minutes": 4, "sessions_per_day": 6},
+	"active": {"taps_per_second": 5, "session_minutes": 10, "sessions_per_day": 12},
+	"life2_casual": {"taps_per_second": 3, "session_minutes": 4, "sessions_per_day": 6, "revenue_mult": 3.0},
+	"life5_casual": {"taps_per_second": 3, "session_minutes": 4, "sessions_per_day": 6, "revenue_mult": 20.0}
+}
