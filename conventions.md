@@ -68,6 +68,18 @@ UI files reach the game through the autoloads `GameState` and `EventBus` (for ex
 
 To learn a function signature, Grep `^static func` in the file. Do not read the whole file.
 
+## How UI files are attached
+
+`game/scenes/main.gd` adds a UI part automatically when its script file exists. The paths are in the constants `HUD_PARTS`, `OVERLAY_PARTS`, and `TAB_PARTS` at the top of `main.gd`. A UI card only creates its own file. Do not edit `main.gd`.
+
+- Each part is a script that `extends Control`, has no `.tscn`, and builds its children in `_ready()`.
+- `main.gd` gives the part a full-rect layout in its area. HUD parts must set `mouse_filter = MOUSE_FILTER_IGNORE` on themselves and on containers that only do layout, so that taps reach the controls below.
+- Popups are not parts. A popup is a Control class that the code shows with the popup host.
+
+## Parallel work
+
+Other agents may work in this tree at the same time. If `verify.ps1` fails only because of an error in a file that is NOT on your card, do not edit that file. Wait 30 seconds and run verify again (two retries at most). If it still fails, report it under NOTES and finish.
+
 ## Scene rules
 
 - Hand-written `.tscn` files break easily. Keep each `.tscn` minimal: the root node and its script.

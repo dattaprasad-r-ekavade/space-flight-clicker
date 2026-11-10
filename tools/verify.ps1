@@ -19,6 +19,11 @@ if (-not (Test-Path -LiteralPath $godot)) {
     exit 1
 }
 
+# Only one verify run at a time: parallel agents share the Godot import cache.
+# The mutex is released when this process exits.
+$verifyMutex = New-Object System.Threading.Mutex($false, 'Global\idle_space_company_verify')
+try { [void]$verifyMutex.WaitOne(300000) } catch [System.Threading.AbandonedMutexException] { }
+
 $logLines = New-Object System.Collections.Generic.List[string]
 $errorLines = New-Object System.Collections.Generic.List[string]
 $failedSteps = New-Object System.Collections.Generic.List[string]
