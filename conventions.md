@@ -85,6 +85,7 @@ To learn a function signature, Grep `^static func` in the file. Do not read the 
 - Every file in `game/core/` has a test file `game/tests/test_<name>.gd`.
 - A test file has `extends RefCounted`. Test functions start with `test_`.
 - Assertions are static: `TestRunner.assert_eq(a, b, msg)`, `TestRunner.assert_true(v, msg)`, `TestRunner.assert_near(a, b, rel_tol, msg)`. Copy the pattern from `game/tests/test_sanity.gd`.
+- Autoload names (`GameState`, `EventBus`, …) are NOT available inside test files. To test an autoload script, make an instance: `var gs = load("res://autoload/game_state.gd").new()`, call `gs.new_game()`, and call `gs.free()` at the end. Copy the pattern from `game/tests/test_game_state_buy.gd`.
 - Before you report a task as done, run:
 
 ```
