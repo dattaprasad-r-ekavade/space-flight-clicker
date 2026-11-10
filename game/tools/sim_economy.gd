@@ -22,6 +22,9 @@ var flights: int = 0
 var done: bool = false
 var seen_unlock: Dictionary = {}
 var seen_manager: Dictionary = {}
+## Smoothed revenue per second, used by the buy policy to decide when to save for a manager.
+var rate: float = 0.0
+const SAVE_SECONDS: float = 120.0
 
 
 func _init() -> void:
@@ -46,6 +49,7 @@ func _run() -> int:
 	var per_day: int = int(p["sessions_per_day"])
 	var mult: float = float(p.get("revenue_mult", 1.0))
 	var slot: int = WAKING_SECONDS / per_day
+	var first_len: int = int(p.get("first_session_minutes", p["session_minutes"])) * 60
 
 	gs = load("res://autoload/game_state.gd").new()
 	gs.new_game()
@@ -63,7 +67,7 @@ func _run() -> int:
 				_check_events()
 			if done:
 				break
-			_session(start + session_len, taps, mult)
+			_session(start + (first_len if (day == 0 and k == 0) else session_len), taps, mult)
 			if done:
 				break
 		if done:
@@ -105,6 +109,7 @@ func _advance(step: int, mult: float) -> void:
 			flights += int(result["finished"])
 	gs.tick(float(step))
 	var gained: float = gs.run_revenue - rev_before
+	rate = 0.9 * rate + 0.1 * (gained * mult / float(step))
 	if mult != 1.0:
 		gs.add_revenue(gained * (mult - 1.0))
 	t += step
@@ -137,6 +142,11 @@ func _buy_once() -> bool:
 		var state: Dictionary = gs.divisions[id]
 		if int(state["level"]) >= 1 and not bool(state["has_manager"]) and gs.buy_manager(id):
 			return true
+	# 1b. Save for a manager that about two minutes of income can pay for.
+	for id: String in order:
+		var st: Dictionary = gs.divisions[id]
+		if int(st["level"]) >= 1 and not bool(st["has_manager"]) and gs.manager_cost(id) <= maxf(rate, gs.income_per_second()) * SAVE_SECONDS:
+			return false
 	# 2. Level 1 of a newly unlocked division.
 	for id: String in order:
 		if gs.is_unlocked(id) and int(gs.divisions[id]["level"]) == 0 and gs.buy_levels(id, 1):

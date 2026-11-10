@@ -1,31 +1,263 @@
 [
-	{"id": "div_bottles_1", "group": "division", "division": "bottles", "name": "Kid on the Hill: revenue x3 (1)", "value": 3.0, "cost": 2500, "requires_stage": "bottles"},
-	{"id": "div_bottles_2", "group": "division", "division": "bottles", "name": "Kid on the Hill: revenue x3 (2)", "value": 3.0, "cost": 250000, "requires_stage": "bottles"},
-	{"id": "div_model_rockets_1", "group": "division", "division": "model_rockets", "name": "Backyard Rockets: revenue x3 (1)", "value": 3.0, "cost": 50000, "requires_stage": "model_rockets"},
-	{"id": "div_model_rockets_2", "group": "division", "division": "model_rockets", "name": "Backyard Rockets: revenue x3 (2)", "value": 3.0, "cost": 5000000, "requires_stage": "model_rockets"},
-	{"id": "div_sounding_1", "group": "division", "division": "sounding", "name": "Aerospace Startup: revenue x3 (1)", "value": 3.0, "cost": 1000000, "requires_stage": "sounding"},
-	{"id": "div_sounding_2", "group": "division", "division": "sounding", "name": "Aerospace Startup: revenue x3 (2)", "value": 3.0, "cost": 100000000, "requires_stage": "sounding"},
-	{"id": "div_orbital_1", "group": "division", "division": "orbital", "name": "Agency Era: revenue x3 (1)", "value": 3.0, "cost": 20000000, "requires_stage": "orbital"},
-	{"id": "div_orbital_2", "group": "division", "division": "orbital", "name": "Agency Era: revenue x3 (2)", "value": 3.0, "cost": 2000000000, "requires_stage": "orbital"},
-	{"id": "div_station_1", "group": "division", "division": "station", "name": "Station Builder: revenue x3 (1)", "value": 3.0, "cost": 400000000, "requires_stage": "station"},
-	{"id": "div_station_2", "group": "division", "division": "station", "name": "Station Builder: revenue x3 (2)", "value": 3.0, "cost": 40000000000, "requires_stage": "station"},
-	{"id": "div_moon_1", "group": "division", "division": "moon", "name": "Moon Base: revenue x3 (1)", "value": 3.0, "cost": 10000000000, "requires_stage": "moon"},
-	{"id": "div_moon_2", "group": "division", "division": "moon", "name": "Moon Base: revenue x3 (2)", "value": 3.0, "cost": 1000000000000, "requires_stage": "moon"},
-	{"id": "div_solar_1", "group": "division", "division": "solar", "name": "Solar System Network: revenue x3 (1)", "value": 3.0, "cost": 300000000000, "requires_stage": "solar"},
-	{"id": "div_solar_2", "group": "division", "division": "solar", "name": "Solar System Network: revenue x3 (2)", "value": 3.0, "cost": 30000000000000, "requires_stage": "solar"},
-	{"id": "div_galaxy_1", "group": "division", "division": "galaxy", "name": "Galaxy Gate: revenue x3 (1)", "value": 3.0, "cost": 10000000000000, "requires_stage": "galaxy"},
-	{"id": "div_galaxy_2", "group": "division", "division": "galaxy", "name": "Galaxy Gate: revenue x3 (2)", "value": 3.0, "cost": 1000000000000000, "requires_stage": "galaxy"},
-	{"id": "div_black_hole_1", "group": "division", "division": "black_hole", "name": "Event Horizon: revenue x3 (1)", "value": 3.0, "cost": 500000000000000, "requires_stage": "black_hole"},
-	{"id": "div_black_hole_2", "group": "division", "division": "black_hole", "name": "Event Horizon: revenue x3 (2)", "value": 3.0, "cost": 50000000000000000, "requires_stage": "black_hole"},
-	{"id": "global_1", "group": "global", "division": "", "name": "All revenue x2 (1)", "value": 2.0, "cost": 100000, "requires_stage": "bottles"},
-	{"id": "global_2", "group": "global", "division": "", "name": "All revenue x2 (2)", "value": 2.0, "cost": 100000000, "requires_stage": "model_rockets"},
-	{"id": "global_3", "group": "global", "division": "", "name": "All revenue x2 (3)", "value": 2.0, "cost": 100000000000, "requires_stage": "sounding"},
-	{"id": "global_4", "group": "global", "division": "", "name": "All revenue x2 (4)", "value": 2.0, "cost": 100000000000000, "requires_stage": "orbital"},
-	{"id": "global_5", "group": "global", "division": "", "name": "All revenue x2 (5)", "value": 2.0, "cost": 100000000000000000, "requires_stage": "station"},
-	{"id": "flight_1", "group": "flight", "division": "", "name": "Faster flights (1)", "value": 0.85, "cost": 1000000, "requires_stage": "bottles"},
-	{"id": "flight_2", "group": "flight", "division": "", "name": "Faster flights (2)", "value": 0.85, "cost": 10000000000, "requires_stage": "model_rockets"},
-	{"id": "flight_3", "group": "flight", "division": "", "name": "Faster flights (3)", "value": 0.85, "cost": 100000000000000, "requires_stage": "sounding"},
-	{"id": "pump_1", "group": "pump", "division": "", "name": "Easier pumping (1)", "value": 0.8, "cost": 500, "requires_stage": "bottles"},
-	{"id": "pump_2", "group": "pump", "division": "", "name": "Easier pumping (2)", "value": 0.8, "cost": 50000, "requires_stage": "model_rockets"},
-	{"id": "pump_3", "group": "pump", "division": "", "name": "Easier pumping (3)", "value": 0.8, "cost": 5000000, "requires_stage": "sounding"}
+	{
+		"id": "div_bottles_1",
+		"group": "division",
+		"division": "bottles",
+		"name": "Kid on the Hill: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 2500.0,
+		"requires_stage": "bottles"
+	},
+	{
+		"id": "div_bottles_2",
+		"group": "division",
+		"division": "bottles",
+		"name": "Kid on the Hill: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 250000.0,
+		"requires_stage": "bottles"
+	},
+	{
+		"id": "div_model_rockets_1",
+		"group": "division",
+		"division": "model_rockets",
+		"name": "Backyard Rockets: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 250000.0,
+		"requires_stage": "model_rockets"
+	},
+	{
+		"id": "div_model_rockets_2",
+		"group": "division",
+		"division": "model_rockets",
+		"name": "Backyard Rockets: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 25000000.0,
+		"requires_stage": "model_rockets"
+	},
+	{
+		"id": "div_sounding_1",
+		"group": "division",
+		"division": "sounding",
+		"name": "Aerospace Startup: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 15000000.0,
+		"requires_stage": "sounding"
+	},
+	{
+		"id": "div_sounding_2",
+		"group": "division",
+		"division": "sounding",
+		"name": "Aerospace Startup: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 1500000000.0,
+		"requires_stage": "sounding"
+	},
+	{
+		"id": "div_orbital_1",
+		"group": "division",
+		"division": "orbital",
+		"name": "Agency Era: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 1100000000.0,
+		"requires_stage": "orbital"
+	},
+	{
+		"id": "div_orbital_2",
+		"group": "division",
+		"division": "orbital",
+		"name": "Agency Era: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 110000000000.0,
+		"requires_stage": "orbital"
+	},
+	{
+		"id": "div_station_1",
+		"group": "division",
+		"division": "station",
+		"name": "Station Builder: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 16000000000.0,
+		"requires_stage": "station"
+	},
+	{
+		"id": "div_station_2",
+		"group": "division",
+		"division": "station",
+		"name": "Station Builder: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 1600000000000.0,
+		"requires_stage": "station"
+	},
+	{
+		"id": "div_moon_1",
+		"group": "division",
+		"division": "moon",
+		"name": "Moon Base: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 150000000000.0,
+		"requires_stage": "moon"
+	},
+	{
+		"id": "div_moon_2",
+		"group": "division",
+		"division": "moon",
+		"name": "Moon Base: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 15000000000000.0,
+		"requires_stage": "moon"
+	},
+	{
+		"id": "div_solar_1",
+		"group": "division",
+		"division": "solar",
+		"name": "Solar System Network: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 4500000000000.0,
+		"requires_stage": "solar"
+	},
+	{
+		"id": "div_solar_2",
+		"group": "division",
+		"division": "solar",
+		"name": "Solar System Network: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 450000000000000.0,
+		"requires_stage": "solar"
+	},
+	{
+		"id": "div_galaxy_1",
+		"group": "division",
+		"division": "galaxy",
+		"name": "Galaxy Gate: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 150000000000000.0,
+		"requires_stage": "galaxy"
+	},
+	{
+		"id": "div_galaxy_2",
+		"group": "division",
+		"division": "galaxy",
+		"name": "Galaxy Gate: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 1.5e+16,
+		"requires_stage": "galaxy"
+	},
+	{
+		"id": "div_black_hole_1",
+		"group": "division",
+		"division": "black_hole",
+		"name": "Event Horizon: revenue x3 (1)",
+		"value": 3.0,
+		"cost": 7500000000000000.0,
+		"requires_stage": "black_hole"
+	},
+	{
+		"id": "div_black_hole_2",
+		"group": "division",
+		"division": "black_hole",
+		"name": "Event Horizon: revenue x3 (2)",
+		"value": 3.0,
+		"cost": 7.5e+17,
+		"requires_stage": "black_hole"
+	},
+	{
+		"id": "global_1",
+		"group": "global",
+		"division": "",
+		"name": "All revenue x2 (1)",
+		"value": 2.0,
+		"cost": 100000.0,
+		"requires_stage": "model_rockets"
+	},
+	{
+		"id": "global_2",
+		"group": "global",
+		"division": "",
+		"name": "All revenue x2 (2)",
+		"value": 2.0,
+		"cost": 440000000.0,
+		"requires_stage": "orbital"
+	},
+	{
+		"id": "global_3",
+		"group": "global",
+		"division": "",
+		"name": "All revenue x2 (3)",
+		"value": 2.0,
+		"cost": 6400000000.0,
+		"requires_stage": "station"
+	},
+	{
+		"id": "global_4",
+		"group": "global",
+		"division": "",
+		"name": "All revenue x2 (4)",
+		"value": 2.0,
+		"cost": 1800000000000.0,
+		"requires_stage": "solar"
+	},
+	{
+		"id": "global_5",
+		"group": "global",
+		"division": "",
+		"name": "All revenue x2 (5)",
+		"value": 2.0,
+		"cost": 60000000000000.0,
+		"requires_stage": "galaxy"
+	},
+	{
+		"id": "flight_1",
+		"group": "flight",
+		"division": "",
+		"name": "Faster flights (1)",
+		"value": 0.85,
+		"cost": 9000000.0,
+		"requires_stage": "sounding"
+	},
+	{
+		"id": "flight_2",
+		"group": "flight",
+		"division": "",
+		"name": "Faster flights (2)",
+		"value": 0.85,
+		"cost": 90000000000.0,
+		"requires_stage": "moon"
+	},
+	{
+		"id": "flight_3",
+		"group": "flight",
+		"division": "",
+		"name": "Faster flights (3)",
+		"value": 0.85,
+		"cost": 90000000000000.0,
+		"requires_stage": "galaxy"
+	},
+	{
+		"id": "pump_1",
+		"group": "pump",
+		"division": "",
+		"name": "Easier pumping (1)",
+		"value": 0.8,
+		"cost": 500.0,
+		"requires_stage": "bottles"
+	},
+	{
+		"id": "pump_2",
+		"group": "pump",
+		"division": "",
+		"name": "Easier pumping (2)",
+		"value": 0.8,
+		"cost": 50000.0,
+		"requires_stage": "model_rockets"
+	},
+	{
+		"id": "pump_3",
+		"group": "pump",
+		"division": "",
+		"name": "Easier pumping (3)",
+		"value": 0.8,
+		"cost": 3000000.0,
+		"requires_stage": "sounding"
+	}
 ]
