@@ -79,3 +79,6 @@ func _on_go_pressed() -> void:
 		GameState.buy_levels(_id, 1)
 	GameState.select_division(_id)
 	PopupHost.instance.close_current()
+	# Design section 11: an interstitial may show after a stage unlock, from stage 4 on. AdService applies the time rules.
+	if GameState.division_order.find(_id) >= 3:
+		AdService.maybe_show_interstitial("stage_unlock")

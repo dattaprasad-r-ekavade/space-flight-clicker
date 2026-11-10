@@ -251,7 +251,7 @@ Tick the **Done** box here when the Lead has committed the card.
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
 | [x] | [T090](tasks/T090.md) | AdService interface and mock | godot-builder | T074 |
-| [ ] | [T091](tasks/T091.md) | Wire every placement | godot-builder | T090, T072 |
+| [x] | [T091](tasks/T091.md) | Wire every placement | godot-builder | T090, T072 |
 | [ ] | [T092](tasks/T092.md) | AdMob accounts | Human | — |
 | [ ] | [T093](tasks/T093.md) | AdMob plugin provider | Lead | T091, T092 |
 | [ ] | [T094](tasks/T094.md) | Consent (UMP) | Lead | T093 |
@@ -262,14 +262,14 @@ Tick the **Done** box here when the Lead has committed the card.
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T100](tasks/T100.md) | String audit | godot-builder | phase 4 gate |
-| [ ] | [T101-es](tasks/T101-es.md) | Translation: Spanish | godot-builder | T100 |
-| [ ] | [T101-pt_BR](tasks/T101-pt_BR.md) | Translation: Brazilian Portuguese | godot-builder | T100 |
-| [ ] | [T101-fr](tasks/T101-fr.md) | Translation: French | godot-builder | T100 |
-| [ ] | [T101-de](tasks/T101-de.md) | Translation: German | godot-builder | T100 |
-| [ ] | [T101-id](tasks/T101-id.md) | Translation: Indonesian | godot-builder | T100 |
-| [ ] | [T101-tr](tasks/T101-tr.md) | Translation: Turkish | godot-builder | T100 |
-| [ ] | [T101-ru](tasks/T101-ru.md) | Translation: Russian | godot-builder | T100 |
+| [x] | [T100](tasks/T100.md) | String audit | godot-builder | phase 4 gate |
+| [x] | [T101-es](tasks/T101-es.md) | Translation: Spanish | godot-builder | T100 |
+| [x] | [T101-pt_BR](tasks/T101-pt_BR.md) | Translation: Brazilian Portuguese | godot-builder | T100 |
+| [x] | [T101-fr](tasks/T101-fr.md) | Translation: French | godot-builder | T100 |
+| [x] | [T101-de](tasks/T101-de.md) | Translation: German | godot-builder | T100 |
+| [x] | [T101-id](tasks/T101-id.md) | Translation: Indonesian | godot-builder | T100 |
+| [x] | [T101-tr](tasks/T101-tr.md) | Translation: Turkish | godot-builder | T100 |
+| [x] | [T101-ru](tasks/T101-ru.md) | Translation: Russian | godot-builder | T100 |
 | [ ] | [T102](tasks/T102.md) | Layout check per language | Lead | all T101-*, T031 |
 
 ### Phase 8 — Android release

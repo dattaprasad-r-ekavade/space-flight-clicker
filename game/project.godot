@@ -32,7 +32,7 @@ window/handheld/orientation=1
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://locale/strings.en.translation")
+locale/translations=PackedStringArray("res://locale/strings.en.translation", "res://locale/strings_es.es.translation", "res://locale/strings_pt_BR.pt_BR.translation", "res://locale/strings_fr.fr.translation", "res://locale/strings_de.de.translation", "res://locale/strings_id.id.translation", "res://locale/strings_tr.tr.translation", "res://locale/strings_ru.ru.translation")
 
 [rendering]
 

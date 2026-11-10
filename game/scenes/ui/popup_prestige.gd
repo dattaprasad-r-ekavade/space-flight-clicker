@@ -110,6 +110,7 @@ func _on_enter_pressed() -> void:
 
 func _do_prestige() -> void:
 	GameState.prestige(_bonus_mult)
+	AdService.maybe_show_interstitial("prestige")
 	EventBus.state_loaded.emit()
 	if PopupHost.instance != null:
 		PopupHost.instance.close_current()
