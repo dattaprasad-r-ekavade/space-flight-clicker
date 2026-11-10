@@ -181,6 +181,12 @@ func compute_pending_offline(now_unix: float) -> void:
 func claim_offline(multiplier: float) -> float:
 	return OfflineOps.claim(self, multiplier)
 
+func can_prestige() -> bool:
+	return PrestigeOps.can_prestige(self)
+
+func prestige(bonus_mult: float) -> void:
+	PrestigeOps.prestige(self, bonus_mult)
+
 ## Pump taps needed for one launch. Research may lower this later.
 func _pump_taps(id: String) -> int:
 	return Research.pump_taps(int(division_data[id]["pump_taps"]), owned_research)

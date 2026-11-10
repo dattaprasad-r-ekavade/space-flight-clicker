@@ -51,6 +51,8 @@ function Invoke-GodotStep {
 
     foreach ($line in $lines) {
         $logLines.Add([string]$line)
+        # Sandbox noise that is not a game error (Codex sandbox cannot read the certificate store).
+        if ($line -match 'Failed to read the root certificate store') { continue }
         if ($line -match 'SCRIPT ERROR|Parse Error|ERROR:') {
             $errorLines.Add([string]$line)
         }
