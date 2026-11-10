@@ -82,14 +82,56 @@ func buy_levels(id: String, count: int) -> bool:
 	return true
 
 
-## Add one pump tap to a division's fuel bar. Returns false when no tap was added.
+## Add one pump tap to a division's fuel bar. While a managed flight runs, a tap speeds it up instead.
+## Returns false when no tap was added.
 func pump(id: String) -> bool:
 	if not divisions.has(id):
 		return false
+	if bool(divisions[id]["has_manager"]) and bool(divisions[id]["flying"]):
+		return _speed_up(id)
 	var taps: int = _pump_taps(id)
 	if not LaunchCycle.can_pump(divisions[id], taps):
 		return false
 	_apply_state(id, LaunchCycle.pump(divisions[id], taps))
+	_emit_bus("division_changed", [id])
+	return true
+
+
+## Buy the manager of a division. Returns false and changes nothing when the division
+## is at level 0, already managed, or revenue is too low.
+func buy_manager(id: String) -> bool:
+	if not divisions.has(id):
+		return false
+	var cost: float = Economy.manager_cost(division_data[id])
+	if not LaunchCycle.can_buy_manager(divisions[id], cost, revenue):
+		return false
+	revenue -= cost
+	_apply_state(id, LaunchCycle.buy_manager(divisions[id], _pump_taps(id)))
+	_emit_bus("revenue_changed", [revenue])
+	_emit_bus("division_changed", [id])
+	return true
+
+
+## Revenue per second summed over all managed divisions at their current levels.
+func income_per_second() -> float:
+	var total: float = 0.0
+	for id: String in division_order:
+		var state: Dictionary = divisions[id]
+		var level: int = int(state["level"])
+		var div: Dictionary = division_data[id]
+		var per_launch: float = Economy.launch_revenue(div, level, _research_mult(id), _global_mult())
+		var flight: float = Economy.flight_time(div, level, _flight_mult())
+		total += LaunchCycle.income_rate(level, bool(state["has_manager"]), per_launch, flight)
+	return total
+
+
+## Cut the remaining time of a managed flight. Returns false when no flight is running.
+func _speed_up(id: String) -> bool:
+	if not bool(divisions[id]["flying"]):
+		return false
+	var flight: float = Economy.flight_time(division_data[id], int(divisions[id]["level"]), _flight_mult())
+	_apply_state(id, LaunchCycle.speed_up(divisions[id], flight))
+	_emit_bus("division_changed", [id])
 	return true
 
 

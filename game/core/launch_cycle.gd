@@ -56,3 +56,39 @@ static func advance(state: Dictionary, delta: float, flight_time: float, pump_ta
 	next["flying"] = flying
 	next["cycle_elapsed"] = elapsed
 	return {"state": next, "finished": finished}
+
+
+## Share of the remaining cycle time that one tap removes on a managed division.
+const TAP_CUT: float = 0.02
+
+
+## True when a manager can be bought: level 1 or more, not yet managed, and revenue covers the cost.
+static func can_buy_manager(state: Dictionary, cost: float, revenue: float) -> bool:
+	return int(state["level"]) >= 1 and not bool(state["has_manager"]) and cost <= revenue
+
+
+## Give a division a manager. A running flight keeps its time. An idle division starts a flight at once.
+static func buy_manager(state: Dictionary, pump_taps: int) -> Dictionary:
+	var next: Dictionary = state.duplicate()
+	next["has_manager"] = true
+	if not bool(state["flying"]):
+		next["flying"] = true
+		next["cycle_elapsed"] = 0.0
+		next["fuel_taps"] = pump_taps
+	return next
+
+
+## Remove TAP_CUT of the remaining cycle time. Only a managed, flying division changes.
+static func speed_up(state: Dictionary, flight_time: float) -> Dictionary:
+	var next: Dictionary = state.duplicate()
+	if bool(state["has_manager"]) and bool(state["flying"]) and flight_time > 0.0:
+		var remaining: float = flight_time - float(state["cycle_elapsed"])
+		next["cycle_elapsed"] = flight_time - remaining * (1.0 - TAP_CUT)
+	return next
+
+
+## Revenue per second of one division. Zero unless it is at level 1 or more and managed.
+static func income_rate(level: int, has_manager: bool, revenue_per_launch: float, flight_time: float) -> float:
+	if level < 1 or not has_manager or flight_time <= 0.0:
+		return 0.0
+	return revenue_per_launch / flight_time
