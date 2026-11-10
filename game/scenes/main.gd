@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 ## Root scene. Children are built in code (see conventions.md, "Scene rules").
 ## Top 55 % is the 3D world with the HUD area on top. Bottom 45 % is the tab panel.
 
@@ -20,6 +20,7 @@ const OVERLAY_PARTS: Array[String] = [
 	"res://scenes/ui/juice.gd",
 	"res://scenes/ui/popup_host.gd",
 	"res://scenes/ui/debug_panel.gd",
+	"res://tools/screenshot.gd",
 ]
 const TAB_PARTS: Array[String] = [
 	"res://scenes/ui/tab_divisions.gd",
