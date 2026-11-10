@@ -42,6 +42,7 @@ var _camera: Camera3D
 var _site_root: Node3D
 var _vehicle_root: Node3D
 var _stage: String = ""
+var _loaded_bottle_skin: String = ""
 
 
 func _ready() -> void:
@@ -67,7 +68,16 @@ func set_stage(id: String) -> void:
 	_stage = id
 	_add_model(_site_root, SITE_PATH_FORMAT % id, false)
 	_current_stage_for_scale = id
-	_add_model(_vehicle_root, VEHICLE_PATH_FORMAT % id, true)
+	_loaded_bottle_skin = GameState.selected_bottle_skin if id == "bottles" else ""
+	var vehicle_path: String = VEHICLE_PATH_FORMAT % id
+	if id == "bottles" and not _loaded_bottle_skin.is_empty():
+		var skin_name: String = _loaded_bottle_skin
+		if skin_name.is_valid_int():
+			skin_name = "bottle_skin_" + skin_name
+		elif skin_name.begins_with("skin_"):
+			skin_name = "bottle_" + skin_name
+		vehicle_path = "res://assets/models/%s.glb" % skin_name
+	_add_model(_vehicle_root, vehicle_path, true)
 
 
 func vehicle() -> Node3D:
@@ -92,7 +102,7 @@ func _on_state_event() -> void:
 
 func _sync_stage() -> void:
 	var id: String = GameState.selected_division
-	if id == _stage:
+	if id == _stage and (id != "bottles" or _loaded_bottle_skin == GameState.selected_bottle_skin):
 		return
 	set_stage(id)
 

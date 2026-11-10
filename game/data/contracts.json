@@ -1,0 +1,9 @@
+[
+  {"id":"launch_short","type":"launch","title":"Launch rockets","base_target":4,"stage_scale":2},
+  {"id":"launch_long","type":"launch","title":"Launch rockets","base_target":8,"stage_scale":3},
+  {"id":"levels_short","type":"levels","title":"Buy division levels","base_target":5,"stage_scale":2},
+  {"id":"levels_long","type":"levels","title":"Buy division levels","base_target":10,"stage_scale":3},
+  {"id":"manager_one","type":"manager","title":"Hire a manager","base_target":1,"stage_scale":0},
+  {"id":"manager_many","type":"manager","title":"Hire managers","base_target":2,"stage_scale":1},
+  {"id":"boost_once","type":"boost","title":"Use one boost","base_target":1,"stage_scale":0}
+]

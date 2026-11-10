@@ -27,6 +27,7 @@ func _ready() -> void:
 	EventBus.division_changed.connect(_on_division_changed)
 	EventBus.state_loaded.connect(_refresh_all)
 	EventBus.prestige_done.connect(_on_prestige_done)
+	_boost_button.pressed.connect(_on_boost_pressed)
 	_refresh_all()
 
 
@@ -96,6 +97,7 @@ func _refresh_all() -> void:
 	_life_label.text = tr("Life %d") % GameState.life
 	_refresh_revenue(GameState.revenue)
 	_refresh_income()
+	_refresh_boost()
 	_refresh_record(GameState.record_height)
 
 
@@ -105,6 +107,19 @@ func _refresh_revenue(value: float) -> void:
 
 func _refresh_income() -> void:
 	_income_label.text = income_text(GameState.income_per_second(), tr("+%s / s"))
+	_refresh_boost()
+
+
+func _refresh_boost() -> void:
+	var seconds_left: float = GameState.boost_2x_remaining
+	if seconds_left > 0.0:
+		_boost_button.text = tr("2× Boost: %s") % NumFormat.duration(seconds_left)
+	else:
+		_boost_button.text = tr("Boost")
+
+
+func _on_boost_pressed() -> void:
+	PopupHost.instance.show_popup(PopupBoosts.new())
 
 
 func _refresh_record(value: float) -> void:

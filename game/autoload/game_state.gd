@@ -27,6 +27,21 @@ var owned_research: Dictionary = {}
 var last_seen_unix: float = 0.0
 ## Offline earnings waiting to be claimed. Not saved. Keys: seconds_counted, revenue.
 var pending_offline: Dictionary = {}
+## Remaining 2x boost time in active-play seconds. Saved as remaining time, not a deadline.
+var boost_2x_remaining: float = 0.0
+## Unix timestamp when the next time warp is available.
+var time_warp_cooldown_until: float = 0.0
+## Daily reward progress, retained through prestige and saved.
+var daily_last_claim_unix: float = 0.0
+var daily_streak: int = 0
+var daily_contracts: Array[Dictionary] = []
+var contract_division_snapshot: Dictionary = {}
+var total_launches: int = 0
+var play_time_seconds: float = 0.0
+var run_time_seconds: float = 0.0
+var best_run_time_seconds: float = 0.0
+var selected_bottle_skin: String = ""
+var selected_trail_color: String = "default"
 ## Player settings: music, sfx, haptics. Saved. Not reset in new_game().
 var settings: Dictionary = {"music": true, "sfx": true, "haptics": true}
 
@@ -34,47 +49,31 @@ var settings: Dictionary = {"music": true, "sfx": true, "haptics": true}
 func _ready() -> void:
 	_load_division_data()
 	new_game()
+	ContractsOps.status(self, _now_unix(), _local_utc_offset())
+	get_node("/root/EventBus").connect("launch_started", _on_contract_launch_started)
+	get_node("/root/EventBus").connect("division_changed", _on_contract_division_changed)
+	get_node("/root/EventBus").connect("boost_changed", _on_contract_boost_changed)
+	get_node("/root/EventBus").connect("launch_started", _on_stats_launch_started)
 
 
 ## Reset all state to a fresh-install value.
-func new_game() -> void:
-	if division_order.is_empty():
-		_load_division_data()
-	revenue = 0.0
-	run_revenue = 0.0
-	record_height = 0.0
-	lifetime_height = 0.0
-	echoes = 0
-	echo_levels = {}
-	life = 1
-	company_name = tr("Bottle Rocket Co.")
-	selected_division = FIRST_DIVISION_ID
-	divisions = {}
-	owned_research = {}
-	last_seen_unix = 0.0
-	pending_offline = {}
-	for id: String in division_order:
-		divisions[id] = _new_division_state()
+func new_game() -> void: GameStateOps.new_game(self, tr("Bottle Rocket Co."))
 
 
 ## Snapshot of all saved state as a Dictionary. The conversion lives in StateCodec.
-func to_dict() -> Dictionary:
-	return StateCodec.to_dict(self)
+func to_dict() -> Dictionary: return StateCodec.to_dict(self)
 
 
 ## Replace all state with values from a saved Dictionary. Missing keys keep defaults.
-func from_dict(data: Dictionary) -> void:
-	StateCodec.apply_dict(self, data)
+func from_dict(data: Dictionary) -> void: StateCodec.apply_dict(self, data)
 
 
 ## Store one setting value. Keys: music, sfx, haptics.
-func set_setting(key: String, on: bool) -> void:
-	settings[key] = on
+func set_setting(key: String, on: bool) -> void: settings[key] = on
 
 
 ## Rename the company. The caller trims and checks the text.
-func set_company_name(name_text: String) -> void:
-	company_name = name_text
+func set_company_name(name_text: String) -> void: company_name = name_text
 
 
 ## Buy a research node with revenue. Returns false and changes nothing when the node
@@ -142,8 +141,41 @@ func launch(id: String) -> bool:
 	return LaunchOps.launch(self, id)
 
 
-func tick(delta: float) -> void:
-	MilestonesOps.tick(self, delta)
+func tick(delta: float) -> void: StatsOps.tick(self, delta)
+
+
+func grant_boost_2x() -> float:
+	return ContractsOps.boost_granted(self, BoostOps.grant_boost_2x(self))
+
+
+func can_time_warp(now_unix: float) -> bool:
+	return BoostOps.can_time_warp(self, now_unix)
+
+
+func use_time_warp(now_unix: float) -> bool:
+	return ContractsOps.time_warp_granted(self, BoostOps.use_time_warp(self, now_unix))
+
+
+func daily_status(now_unix: float, utc_offset: int) -> Dictionary:
+	return DailyOps.status(self, now_unix, utc_offset)
+
+
+func claim_daily_reward(now_unix: float, utc_offset: int) -> bool:
+	return DailyOps.claim(self, now_unix, utc_offset)
+
+
+func choose_bottle_skin(id: String) -> bool: return CosmeticsOps.choose_bottle_skin(self, id)
+func choose_trail_color(id: String) -> bool: return CosmeticsOps.choose_trail_color(self, id)
+func unlocked_trail_ids() -> Array[String]: return CosmeticsOps.unlocked_trail_ids(self)
+func _on_stats_launch_started(_id: String) -> void: StatsOps.launch_started(self)
+
+
+func contracts_status(now_unix: float, utc_offset: int) -> Array[Dictionary]: return ContractsOps.status(self, now_unix, utc_offset)
+func _on_contract_launch_started(_id: String) -> void: ContractsOps.on_launch_started(self, _now_unix(), _local_utc_offset())
+func _on_contract_division_changed(id: String) -> void: ContractsOps.on_division_changed(self, id, _now_unix(), _local_utc_offset())
+func _on_contract_boost_changed() -> void: ContractsOps.on_boost_used(self, _now_unix(), _local_utc_offset())
+func _local_utc_offset() -> int: return int(Time.get_time_zone_from_system().get("bias", 0))
+func _now_unix() -> float: return get_node("/root/TimeService").now_unix()
 
 
 func buy_manager(id: String) -> bool:
@@ -183,11 +215,10 @@ func compute_pending_offline(now_unix: float) -> void:
 func claim_offline(multiplier: float) -> float:
 	return OfflineOps.claim(self, multiplier)
 
-func can_prestige() -> bool:
-	return PrestigeOps.can_prestige(self)
+func can_prestige() -> bool: return PrestigeOps.can_prestige(self)
 
 func prestige(bonus_mult: float) -> void:
-	EchoShopOps.prestige(self, bonus_mult)
+	CosmeticsOps.prestige(self, bonus_mult)
 
 func buy_echo_item(item_id: String) -> bool:
 	return EchoShopOps.buy_echo_item(self, item_id)
@@ -207,7 +238,7 @@ func _research_mult(id: String) -> float:
 
 ## Multiplier for all revenue from owned global research.
 func _global_mult() -> float:
-	return MilestonesOps.global_mult(self)
+	return BoostOps.global_mult(self, MilestonesOps.global_mult(self))
 
 func _toast_milestone(name_key: String) -> void:
 	_emit_bus("toast_requested", [tr(name_key)])
