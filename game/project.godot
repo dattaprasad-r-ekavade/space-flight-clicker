@@ -10,6 +10,16 @@ config/name="Idle Space Company"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 
+[autoload]
+
+EventBus="*res://autoload/event_bus.gd"
+GameState="*res://autoload/game_state.gd"
+SaveService="*res://autoload/save_service.gd"
+TimeService="*res://autoload/time_service.gd"
+AdService="*res://autoload/ad_service.gd"
+Analytics="*res://autoload/analytics.gd"
+AudioService="*res://autoload/audio_service.gd"
+
 [display]
 
 window/size/viewport_width=1080
