@@ -51,6 +51,17 @@ tools/verify.ps1       Runs import + tests + smoke run. Must pass before a task 
 9. Use the current time only through `TimeService.now_unix()`.
 10. Do not add addons or plugins unless the task card says so.
 
+## Existing classes (use these; do not write a second copy)
+
+| Class | File | Use |
+|---|---|---|
+| `DataLoader` | `game/core/data_loader.gd` | `DataLoader.divisions()` returns the nine division Dictionaries; `load_json(path)` |
+| `Economy` | `game/core/economy.gd` | Static formulas: `apogee`, `level_cost`, `bulk_cost`, `max_affordable`, `level_mult`, `flight_time`, `launch_revenue`, `manager_cost` |
+| `NumFormat` | `game/core/formatter.gd` | `NumFormat.money(v)`, `NumFormat.height(metres)`, `NumFormat.duration(seconds)` |
+| `TestRunner` | `game/tests/run_tests.gd` | Test assertions |
+
+To learn a function signature, Grep `^static func` in the file. Do not read the whole file.
+
 ## Scene rules
 
 - Hand-written `.tscn` files break easily. Keep each `.tscn` minimal: the root node and its script.
