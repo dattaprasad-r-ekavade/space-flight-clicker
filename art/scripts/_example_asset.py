@@ -3,6 +3,7 @@
 Run from the repository root:
     blender --background --python art/scripts/_example_asset.py
 """
+import math  # lib_style does not export math; import it yourself when you need it
 import os
 import sys
 

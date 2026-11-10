@@ -208,6 +208,7 @@ Tick the **Done** box here when the Lead has committed the card.
 | [ ] | [T052](tasks/T052.md) | Icon and store art sources | blender-artist | T044v |
 
 **Art review (Lead):** open all previews together. Use the Blender MCP `look` tool if needed. Send back any asset that is off-style, with a one-line correction on the card.
+| [ ] | [T053](tasks/T053.md) | Art polish pass | Lead | T055 |
 | [ ] | [T055](tasks/T055.md) | World scene and camera | godot-builder | T021, T041v |
 | [ ] | [T056](tasks/T056.md) | Sky gradient per stage | godot-builder | T055 |
 | [ ] | [T057](tasks/T057.md) | Flight animation | godot-builder | T055 |
