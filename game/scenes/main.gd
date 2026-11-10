@@ -20,6 +20,7 @@ const HUD_PARTS: Array[String] = [
 const OVERLAY_PARTS: Array[String] = [
 	"res://scenes/ui/juice.gd",
 	"res://scenes/ui/popup_host.gd",
+	"res://scenes/ui/stage_unlock_watcher.gd",
 	"res://scenes/ui/debug_panel.gd",
 	"res://tools/screenshot.gd",
 ]

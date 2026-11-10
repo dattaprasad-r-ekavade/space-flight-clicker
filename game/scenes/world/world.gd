@@ -4,6 +4,16 @@ extends Node3D
 ## 3D launch scene. Shows the site and the vehicle of the selected division.
 ## Built in _ready(). Models come from res://assets/models/.
 
+## World parts that are added when their script exists. A world card only creates its file.
+## Each script extends Node (or Node3D) and finds the world with get_parent() as World.
+const WORLD_PARTS: Array[String] = [
+	"res://scenes/world/sky.gd",
+	"res://scenes/world/flight.gd",
+	"res://scenes/world/trail.gd",
+	"res://scenes/world/kid.gd",
+	"res://scenes/world/black_hole.gd",
+	"res://scenes/world/cinematic_prestige.gd",
+]
 const SITE_PATH_FORMAT: String = "res://assets/models/site_%s.glb"
 const VEHICLE_PATH_FORMAT: String = "res://assets/models/vehicle_%s.glb"
 
@@ -43,6 +53,7 @@ func _ready() -> void:
 	_vehicle_root.scale = Vector3.ONE * VEHICLE_SCALE
 	add_child(_vehicle_root)
 	set_stage(GameState.selected_division)
+	_add_parts()
 	EventBus.division_changed.connect(_on_division_event)
 	EventBus.state_loaded.connect(_on_state_event)
 
@@ -153,3 +164,12 @@ func _placeholder_box(box: BoxMesh, pos: Vector3) -> MeshInstance3D:
 	mi.mesh = box
 	mi.position = pos
 	return mi
+
+
+func _add_parts() -> void:
+	for path: String in WORLD_PARTS:
+		if ResourceLoader.exists(path):
+			var part: Node = load(path).new() as Node
+			if part != null:
+				part.name = path.get_file().get_basename().to_pascal_case()
+				add_child(part)
