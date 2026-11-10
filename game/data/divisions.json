@@ -1,0 +1,110 @@
+[
+	{
+		"id": "bottles",
+		"name_key": "DIV_BOTTLES_NAME",
+		"stage_name": "Kid on the Hill",
+		"h_start": 1,
+		"h_ceiling": 100,
+		"base_cost": 5,
+		"growth": 1.08,
+		"base_rev": 1,
+		"base_flight_s": 1.5,
+		"pump_taps": 5
+	},
+	{
+		"id": "model_rockets",
+		"name_key": "DIV_MODEL_ROCKETS_NAME",
+		"stage_name": "Backyard Rockets",
+		"h_start": 100,
+		"h_ceiling": 1e4,
+		"base_cost": 100,
+		"growth": 1.14,
+		"base_rev": 40,
+		"base_flight_s": 3,
+		"pump_taps": 8
+	},
+	{
+		"id": "sounding",
+		"name_key": "DIV_SOUNDING_NAME",
+		"stage_name": "Aerospace Startup",
+		"h_start": 1e4,
+		"h_ceiling": 1e5,
+		"base_cost": 2000,
+		"growth": 1.13,
+		"base_rev": 500,
+		"base_flight_s": 6,
+		"pump_taps": 10
+	},
+	{
+		"id": "orbital",
+		"name_key": "DIV_ORBITAL_NAME",
+		"stage_name": "Agency Era",
+		"h_start": 1e5,
+		"h_ceiling": 4e5,
+		"base_cost": 40000,
+		"growth": 1.12,
+		"base_rev": 6000,
+		"base_flight_s": 10,
+		"pump_taps": 12
+	},
+	{
+		"id": "station",
+		"name_key": "DIV_STATION_NAME",
+		"stage_name": "Station Builder",
+		"h_start": 4e5,
+		"h_ceiling": 3.844e8,
+		"base_cost": 800000,
+		"growth": 1.12,
+		"base_rev": 80000,
+		"base_flight_s": 20,
+		"pump_taps": 15
+	},
+	{
+		"id": "moon",
+		"name_key": "DIV_MOON_NAME",
+		"stage_name": "Moon Base",
+		"h_start": 3.844e8,
+		"h_ceiling": 5.5e10,
+		"base_cost": 2e7,
+		"growth": 1.11,
+		"base_rev": 1.2e6,
+		"base_flight_s": 45,
+		"pump_taps": 15
+	},
+	{
+		"id": "solar",
+		"name_key": "DIV_SOLAR_NAME",
+		"stage_name": "Solar System Network",
+		"h_start": 5.5e10,
+		"h_ceiling": 9.46e15,
+		"base_cost": 6e8,
+		"growth": 1.10,
+		"base_rev": 2e7,
+		"base_flight_s": 120,
+		"pump_taps": 20
+	},
+	{
+		"id": "galaxy",
+		"name_key": "DIV_GALAXY_NAME",
+		"stage_name": "Galaxy Gate",
+		"h_start": 9.46e15,
+		"h_ceiling": 9.46e18,
+		"base_cost": 2e10,
+		"growth": 1.09,
+		"base_rev": 4e8,
+		"base_flight_s": 300,
+		"pump_taps": 20
+	},
+	{
+		"id": "black_hole",
+		"name_key": "DIV_BLACK_HOLE_NAME",
+		"stage_name": "Event Horizon",
+		"h_start": 9.46e18,
+		"h_ceiling": 2.46e20,
+		"base_cost": 1e12,
+		"growth": 1.08,
+		"base_rev": 1e10,
+		"base_flight_s": 600,
+		"pump_taps": 25
+	}
+]

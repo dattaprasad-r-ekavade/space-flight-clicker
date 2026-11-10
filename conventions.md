@@ -47,7 +47,7 @@ tools/verify.ps1       Runs import + tests + smoke run. Must pass before a task 
 5. Components talk through `EventBus` signals. Do not use `get_node("../../..")` paths across scenes.
 6. No magic numbers for balance. Read balance values from `game/data/*.json`.
 7. Money and height are `float` (64-bit). Do not store them in `Vector2`, `Color`, or shader parameters, because those are 32-bit.
-8. Player-visible text uses `tr("KEY")` with keys from `game/locale/strings.csv`. Add the English text to the CSV in the same task.
+8. Wrap every player-visible English text in `tr()`, for example `tr("Launch")`. Do not create or edit `game/locale/strings.csv`; task T100 builds it from the `tr()` calls. For names that come from JSON data, show the English field (for example `stage_name`) through `tr()`.
 9. Use the current time only through `TimeService.now_unix()`.
 10. Do not add addons or plugins unless the task card says so.
 
