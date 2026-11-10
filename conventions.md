@@ -72,7 +72,8 @@ tools/verify.ps1       Runs import + tests + smoke run. Must pass before a task 
 ## Tests and verification
 
 - Every file in `game/core/` has a test file `game/tests/test_<name>.gd`.
-- Test functions start with `test_` and use the helpers in `run_tests.gd`.
+- A test file has `extends RefCounted`. Test functions start with `test_`.
+- Assertions are static: `TestRunner.assert_eq(a, b, msg)`, `TestRunner.assert_true(v, msg)`, `TestRunner.assert_near(a, b, rel_tol, msg)`. Copy the pattern from `game/tests/test_sanity.gd`.
 - Before you report a task as done, run:
 
 ```
