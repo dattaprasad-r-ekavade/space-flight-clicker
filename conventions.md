@@ -45,6 +45,7 @@ tools/verify.ps1       Runs import + tests + smoke run. Must pass before a task 
 3. Files in `game/core/` are pure logic. They must not touch nodes, the scene tree, autoloads, or the clock. Pass values in as arguments. This makes them testable.
 4. All mutable game state lives in `GameState`. UI reads state and calls `GameState` methods. UI never changes state directly.
 5. Components talk through `EventBus` signals. Do not use `get_node("../../..")` paths across scenes.
+5a. Files in `game/autoload/` and `game/core/` must never name a UI class (`PopupHost`, any `Popup…`, any tab) or a world class. This breaks compilation at start. To show a short message from logic, use `gs._emit_bus("toast_requested", [text])`.
 6. No magic numbers for balance. Read balance values from `game/data/*.json`.
 7. Money and height are `float` (64-bit). Do not store them in `Vector2`, `Color`, or shader parameters, because those are 32-bit.
 8. Wrap every player-visible English text in `tr()`, for example `tr("Launch")`. Do not create or edit `game/locale/strings.csv`; task T100 builds it from the `tr()` calls. For names that come from JSON data, show the English field (for example `stage_name`) through `tr()`.

@@ -1,0 +1,14 @@
+[
+	{"id": "higher_than_everest", "name_key": "Higher than Everest", "threshold": 1.0e3, "mult": 1.1},
+	{"id": "past_the_moon", "name_key": "Past the Moon", "threshold": 1.0e5, "mult": 1.1},
+	{"id": "edge_of_space", "name_key": "Edge of Space", "threshold": 1.0e7, "mult": 1.1},
+	{"id": "into_orbit", "name_key": "Into Orbit", "threshold": 1.0e9, "mult": 1.1},
+	{"id": "past_mars", "name_key": "Past Mars", "threshold": 1.0e11, "mult": 1.1},
+	{"id": "beyond_jupiter", "name_key": "Beyond Jupiter", "threshold": 1.0e13, "mult": 1.1},
+	{"id": "past_pluto", "name_key": "Past Pluto", "threshold": 1.0e15, "mult": 1.1},
+	{"id": "interstellar_traveler", "name_key": "Interstellar Traveler", "threshold": 1.0e17, "mult": 1.1},
+	{"id": "past_nearest_stars", "name_key": "Past the Nearest Stars", "threshold": 1.0e19, "mult": 1.1},
+	{"id": "beyond_the_milky_way", "name_key": "Beyond the Milky Way", "threshold": 1.0e21, "mult": 1.1},
+	{"id": "across_the_local_group", "name_key": "Across the Local Group", "threshold": 1.0e23, "mult": 1.1},
+	{"id": "edge_of_the_universe", "name_key": "At the Edge of the Universe", "threshold": 1.0e25, "mult": 1.1}
+]

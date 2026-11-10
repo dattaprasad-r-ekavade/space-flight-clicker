@@ -26,6 +26,7 @@ func _ready() -> void:
 	_build()
 	visible = false
 	EventBus.state_loaded.connect(_check_offline)
+	EventBus.toast_requested.connect(toast)
 	call_deferred("_check_offline")
 
 

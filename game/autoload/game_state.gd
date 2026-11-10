@@ -9,6 +9,7 @@ var run_revenue: float = 0.0
 var record_height: float = 0.0
 var lifetime_height: float = 0.0
 var echoes: int = 0
+var echo_levels: Dictionary = {}
 var life: int = 1
 var company_name: String = ""
 var selected_division: String = FIRST_DIVISION_ID
@@ -44,6 +45,7 @@ func new_game() -> void:
 	record_height = 0.0
 	lifetime_height = 0.0
 	echoes = 0
+	echo_levels = {}
 	life = 1
 	company_name = tr("Bottle Rocket Co.")
 	selected_division = FIRST_DIVISION_ID
@@ -141,7 +143,7 @@ func launch(id: String) -> bool:
 
 
 func tick(delta: float) -> void:
-	LaunchOps.tick(self, delta)
+	MilestonesOps.tick(self, delta)
 
 
 func buy_manager(id: String) -> bool:
@@ -149,7 +151,7 @@ func buy_manager(id: String) -> bool:
 
 
 func manager_cost(id: String) -> float:
-	return Economy.manager_cost(division_data[id])
+	return EchoShopOps.manager_cost(self, id)
 
 
 func income_per_second() -> float:
@@ -173,7 +175,7 @@ func add_revenue(amount: float) -> void:
 
 ## Offline earnings. Logic lives in game/core/offline_ops.gd.
 func offline_cap_seconds() -> float:
-	return 4 * 3600.0
+	return EchoShopOps.offline_cap_seconds(self)
 
 func compute_pending_offline(now_unix: float) -> void:
 	OfflineOps.compute_pending(self, now_unix)
@@ -185,11 +187,17 @@ func can_prestige() -> bool:
 	return PrestigeOps.can_prestige(self)
 
 func prestige(bonus_mult: float) -> void:
-	PrestigeOps.prestige(self, bonus_mult)
+	EchoShopOps.prestige(self, bonus_mult)
+
+func buy_echo_item(item_id: String) -> bool:
+	return EchoShopOps.buy_echo_item(self, item_id)
 
 ## Pump taps needed for one launch. Research may lower this later.
 func _pump_taps(id: String) -> int:
-	return Research.pump_taps(int(division_data[id]["pump_taps"]), owned_research)
+	return EchoShopOps.pump_taps(self, id)
+
+func head_start_revenue() -> float:
+	return EchoShopOps.head_start_revenue(self)
 
 
 ## Research multiplier for a division.
@@ -199,12 +207,24 @@ func _research_mult(id: String) -> float:
 
 ## Multiplier for all revenue from owned global research.
 func _global_mult() -> float:
-	return Research.global_mult(owned_research)
+	return MilestonesOps.global_mult(self)
+
+func _toast_milestone(name_key: String) -> void:
+	_emit_bus("toast_requested", [tr(name_key)])
 
 
 ## Multiplier for flight time from owned faster-flight research.
 func _flight_mult() -> float:
-	return Research.flight_mult(owned_research)
+	return EchoShopOps.flight_multiplier(self)
+
+func echo_power() -> float:
+	return EchoShopOps.echo_power(self)
+
+func lucky_launch_pays_ten(random_value: float) -> bool:
+	return EchoShopOps.lucky_launch_pays_ten(self, random_value)
+
+func unlocked_skin_ids() -> Array[String]:
+	return EchoShopOps.unlocked_skin_ids(self)
 
 
 func _apply_state(id: String, next: Dictionary) -> void:

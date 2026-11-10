@@ -173,8 +173,8 @@ Tick the **Done** box here when the Lead has committed the card.
 | [x] | [T025](tasks/T025.md) | Managers tab | godot-builder | T024 |
 | [x] | [T026](tasks/T026.md) | Research tab | godot-builder | T024, T014 |
 | [x] | [T027](tasks/T027.md) | Popup system and offline popup | godot-builder | T022, T016 |
-| [ ] | [T028](tasks/T028.md) | Stage-unlock popup and stage switching | godot-builder | T027 |
-| [ ] | [T029](tasks/T029.md) | Settings and More tab | godot-builder | T027 |
+| [x] | [T028](tasks/T028.md) | Stage-unlock popup and stage switching | godot-builder | T027 |
+| [x] | [T029](tasks/T029.md) | Settings and More tab | godot-builder | T027 |
 | [x] | [T030](tasks/T030.md) | Debug panel | godot-builder | T027 |
 | [ ] | [T031](tasks/T031.md) | Screenshot tool | godot-builder | T030 |
 
@@ -210,13 +210,13 @@ Tick the **Done** box here when the Lead has committed the card.
 **Art review (Lead):** open all previews together. Use the Blender MCP `look` tool if needed. Send back any asset that is off-style, with a one-line correction on the card.
 | [x] | [T053](tasks/T053.md) | Art polish pass | Lead | T055 |
 | [x] | [T055](tasks/T055.md) | World scene and camera | godot-builder | T021, T041v |
-| [ ] | [T056](tasks/T056.md) | Sky gradient per stage | godot-builder | T055 |
-| [ ] | [T057](tasks/T057.md) | Flight animation | godot-builder | T055 |
-| [ ] | [T058](tasks/T058.md) | Particle trails | godot-builder | T057 |
-| [ ] | [T059](tasks/T059.md) | Kid and pump animation | godot-builder | T055, T050 |
+| [x] | [T056](tasks/T056.md) | Sky gradient per stage | godot-builder | T055 |
+| [x] | [T057](tasks/T057.md) | Flight animation | godot-builder | T055 |
+| [x] | [T058](tasks/T058.md) | Particle trails | godot-builder | T057 |
+| [x] | [T059](tasks/T059.md) | Kid and pump animation | godot-builder | T055, T050 |
 | [ ] | [T060](tasks/T060.md) | Black hole | Lead | T056 |
 | [ ] | [T061](tasks/T061.md) | Prestige cinematic | godot-builder | T060, T059 |
-| [ ] | [T062](tasks/T062.md) | Juice pass | godot-builder | T057, T023 |
+| [x] | [T062](tasks/T062.md) | Juice pass | godot-builder | T057, T023 |
 
 **Gate 3:** Lead reviews screenshots of all nine stages. Human checks frame rate.
 
@@ -224,12 +224,12 @@ Tick the **Done** box here when the Lead has committed the card.
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T070](tasks/T070.md) | Prestige logic | godot-builder | T015 |
-| [ ] | [T071a](tasks/T071a.md) | Echo Shop: data and buying | godot-builder | T070 |
-| [ ] | [T071b](tasks/T071b.md) | Echo Shop effects, part 1 | godot-builder | T071a |
-| [ ] | [T071c](tasks/T071c.md) | Echo Shop effects, part 2 | godot-builder | T071b |
+| [x] | [T070](tasks/T070.md) | Prestige logic | godot-builder | T015 |
+| [x] | [T071a](tasks/T071a.md) | Echo Shop: data and buying | godot-builder | T070 |
+| [x] | [T071b](tasks/T071b.md) | Echo Shop effects, part 1 | godot-builder | T071a |
+| [x] | [T071c](tasks/T071c.md) | Echo Shop effects, part 2 | godot-builder | T071b |
 | [ ] | [T072](tasks/T072.md) | Echoes tab and prestige screen | godot-builder | T071c, T061 |
-| [ ] | [T073](tasks/T073.md) | Lifetime milestones | godot-builder | T070 |
+| [x] | [T073](tasks/T073.md) | Lifetime milestones | godot-builder | T070 |
 | [ ] | [T074](tasks/T074.md) | Boosts | godot-builder | T027 |
 | [ ] | [T075](tasks/T075.md) | Daily reward | godot-builder | T027 |
 | [ ] | [T076](tasks/T076.md) | Contracts | godot-builder | T075 |
@@ -242,7 +242,7 @@ Tick the **Done** box here when the Lead has committed the card.
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T080](tasks/T080.md) | Audio service | godot-builder | T029 |
+| [x] | [T080](tasks/T080.md) | Audio service | godot-builder | T029 |
 | [ ] | [T081](tasks/T081.md) | Sound and music assets | Human (with Lead help) | T080 |
 | [ ] | [T082](tasks/T082.md) | Hook sounds | godot-builder | T081 |
 
@@ -250,12 +250,12 @@ Tick the **Done** box here when the Lead has committed the card.
 
 | Done | Id | Title | Agent | Depends |
 |---|---|---|---|---|
-| [ ] | [T090](tasks/T090.md) | AdService interface and mock | godot-builder | T074 |
+| [x] | [T090](tasks/T090.md) | AdService interface and mock | godot-builder | T074 |
 | [ ] | [T091](tasks/T091.md) | Wire every placement | godot-builder | T090, T072 |
 | [ ] | [T092](tasks/T092.md) | AdMob accounts | Human | — |
 | [ ] | [T093](tasks/T093.md) | AdMob plugin provider | Lead | T091, T092 |
 | [ ] | [T094](tasks/T094.md) | Consent (UMP) | Lead | T093 |
-| [ ] | [T095](tasks/T095.md) | Analytics interface and events | godot-builder | T090 |
+| [x] | [T095](tasks/T095.md) | Analytics interface and events | godot-builder | T090 |
 | [ ] | [T096](tasks/T096.md) | Analytics provider | Lead + Human | T095 |
 
 ### Phase 7 — Localisation

@@ -18,6 +18,7 @@ static func to_dict(gs: Node) -> Dictionary:
 	for key: String in INT_KEYS:
 		data[key] = int(gs.get(key))
 	data["company_name"] = str(gs.get("company_name"))
+	data["echo_levels"] = (gs.get("echo_levels") as Dictionary).duplicate()
 	data["selected_division"] = str(gs.get("selected_division"))
 	data["owned_research"] = (gs.get("owned_research") as Dictionary).duplicate()
 	data["settings"] = (gs.get("settings") as Dictionary).duplicate()
@@ -37,6 +38,8 @@ static func apply_dict(gs: Node, data: Dictionary) -> void:
 			gs.set(key, int(data[key]))
 	if data.has("company_name"):
 		gs.set("company_name", str(data["company_name"]))
+	if data.has("echo_levels") and typeof(data["echo_levels"]) == TYPE_DICTIONARY:
+		gs.set("echo_levels", (data["echo_levels"] as Dictionary).duplicate())
 	if data.has("owned_research") and typeof(data["owned_research"]) == TYPE_DICTIONARY:
 		gs.set("owned_research", (data["owned_research"] as Dictionary).duplicate())
 	if data.has("settings") and typeof(data["settings"]) == TYPE_DICTIONARY:

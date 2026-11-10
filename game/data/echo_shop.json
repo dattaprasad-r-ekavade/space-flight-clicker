@@ -1,0 +1,58 @@
+[
+	{
+		"id": "head_start",
+		"name_key": "Head Start",
+		"max_level": 5,
+		"base_cost": 10,
+		"value": {"start": 1000.0, "growth": 100.0}
+	},
+	{
+		"id": "old_friends",
+		"name_key": "Old Friends",
+		"max_level": 1,
+		"base_cost": 50,
+		"value": 1.0
+	},
+	{
+		"id": "muscle_memory",
+		"name_key": "Muscle Memory",
+		"max_level": 3,
+		"base_cost": 15,
+		"value": 0.2
+	},
+	{
+		"id": "long_nap",
+		"name_key": "Long Nap",
+		"max_level": 4,
+		"base_cost": 20,
+		"value": 7200.0
+	},
+	{
+		"id": "deep_echo",
+		"name_key": "Deep Echo",
+		"max_level": 4,
+		"base_cost": 100,
+		"value": 0.005
+	},
+	{
+		"id": "fast_hands",
+		"name_key": "Fast Hands",
+		"max_level": 5,
+		"base_cost": 25,
+		"value": 0.1
+	},
+	{
+		"id": "lucky_bottle",
+		"name_key": "Lucky Bottle",
+		"max_level": 3,
+		"base_cost": 40,
+		"value": 0.03
+	},
+	{
+		"id": "memory_bottles",
+		"name_key": "Memory Bottles",
+		"max_level": 6,
+		"base_cost": 30,
+		"value": 1.0
+	}
+]
