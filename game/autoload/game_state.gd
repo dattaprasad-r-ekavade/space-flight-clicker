@@ -47,6 +47,16 @@ func new_game() -> void:
 		divisions[id] = _new_division_state()
 
 
+## Snapshot of all saved state as a Dictionary. The conversion lives in StateCodec.
+func to_dict() -> Dictionary:
+	return StateCodec.to_dict(self)
+
+
+## Replace all state with values from a saved Dictionary. Missing keys keep defaults.
+func from_dict(data: Dictionary) -> void:
+	StateCodec.apply_dict(self, data)
+
+
 ## Buy a research node with revenue. Returns false and changes nothing when the node
 ## is unknown, owned, locked by stage, or too expensive.
 func buy_research(id: String) -> bool:
