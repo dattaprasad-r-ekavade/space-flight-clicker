@@ -22,14 +22,14 @@ STORE_DIR = os.path.join(lib_style.REPO, "art", "store")
 ICON_PATH = os.path.join(STORE_DIR, "icon_1024.png")
 FEATURE_PATH = os.path.join(STORE_DIR, "feature_1024x500.png")
 
-TILT_DEG = 30.0            # nose tilts from vertical toward the upper right
-ICON_FILL = 0.70           # rocket size as a share of the icon frame
+TILT_DEG = 40.0            # nose tilts from vertical toward the upper right
+ICON_FILL = 0.75           # rocket size as a share of the icon frame
 FEATURE_FILL = 0.75        # rocket height as a share of the feature frame height
 FEATURE_ANCHOR_U = 5.0 / 6.0   # rocket centre sits in the right third
 CAM_DISTANCE = 10.0        # camera sits on -Y and looks along +Y
 STAR_Y = 1.0               # stars sit behind the rocket
-STAR_CLEARANCE = 0.25      # metres; no star closer than this to the rocket
-FLAME_LENGTH = 0.6
+STAR_CLEARANCE = 0.30      # metres; no star closer than this to the rocket
+FLAME_LENGTH = 0.88
 
 frame_objs = []
 
@@ -68,9 +68,9 @@ def build_rig(new_objs):
 
 def add_flame(rig):
     """Orange flame cone with a yellow core, under the engine bell. Tip points down."""
-    outer = cone((0, 0, 0), radius=0.14, height=FLAME_LENGTH, material="orange", segments=10, rot=(180, 0, 0))
-    inner = cone((0, 0, 0), radius=0.07, height=FLAME_LENGTH * 0.6, material="sun_yellow",
-                 segments=10, rot=(180, 0, 0))
+    outer = cone((0, 0, 0), radius=0.20, height=FLAME_LENGTH, material="orange", segments=12, rot=(180, 0, 0))
+    inner = cone((0, 0, 0), radius=0.11, height=FLAME_LENGTH * 0.72, material="sun_yellow",
+                 segments=12, rot=(180, 0, 0))
     outer.parent = rig
     inner.parent = rig
     return [outer, inner]
@@ -108,25 +108,42 @@ def make_camera(cam_x, cam_z, ortho_width):
     frame_objs.append(cam)
 
 
-def add_stars(rng, count, cam_x, cam_z, width_world, height_world, pts):
-    """Place glow_white spheres behind the rocket, away from the rocket outline."""
+def add_stars(rng, count, cam_x, cam_z, width_world, height_world, pts,
+              min_u=0.05, planet_keepout=None):
+    """Place larger stars away from the rocket, the planet, and any title area."""
     placed = 0
     attempts = 0
     clear_sq = STAR_CLEARANCE * STAR_CLEARANCE
     while placed < count and attempts < 5000:
         attempts += 1
-        x = cam_x + rng.uniform(-0.45, 0.45) * width_world
+        x = cam_x + rng.uniform(min_u - 0.5, 0.45) * width_world
         z = cam_z + rng.uniform(-0.45, 0.45) * height_world
         if min((x - px) ** 2 + (z - pz) ** 2 for px, pz in pts) < clear_sq:
             continue
-        radius = rng.uniform(0.02, 0.045)
+        radius = rng.uniform(0.05, 0.085)
+        if planet_keepout is not None:
+            planet_x, planet_z, planet_radius = planet_keepout
+            if (x - planet_x) ** 2 + (z - planet_z) ** 2 < (planet_radius + radius) ** 2:
+                continue
         star = sphere((x, STAR_Y, z), radius=radius, material="glow_white", segments=8, rings=4)
         frame_objs.append(star)
         placed += 1
     print(f"STARS placed {placed} of {count}")
 
 
-def render_frame(out_path, width_px, height_px, anchor_u, width_world, cx, cz, pts, star_count, seed):
+def add_planet_arc(cam_x, cam_z, width_world, height_world, anchor_u, anchor_v, radius_fraction):
+    """Add a low-poly moon partly outside a lower frame corner."""
+    radius = height_world * radius_fraction
+    x = cam_x + (anchor_u - 0.5) * width_world
+    z = cam_z + (0.5 - anchor_v) * height_world
+    moon = sphere((x, STAR_Y + 0.15, z), radius=radius, material="moon_grey",
+                  segments=16, rings=8, scale=(1.0, 0.08, 1.0))
+    frame_objs.append(moon)
+    return x, z, radius
+
+
+def render_frame(out_path, width_px, height_px, anchor_u, width_world, cx, cz, pts,
+                 star_count, seed, planet_anchor, planet_radius_fraction, star_min_u):
     """Set up the camera and stars, then render one PNG.
 
     anchor_u: horizontal image position of the rocket centre (0 to 1).
@@ -137,7 +154,10 @@ def render_frame(out_path, width_px, height_px, anchor_u, width_world, cx, cz, p
     cam_x = cx - (anchor_u - 0.5) * width_world
     cam_z = cz
     make_camera(cam_x, cam_z, width_world)
-    add_stars(random.Random(seed), star_count, cam_x, cam_z, width_world, height_world, pts)
+    planet_keepout = add_planet_arc(cam_x, cam_z, width_world, height_world,
+                                    planet_anchor[0], planet_anchor[1], planet_radius_fraction)
+    add_stars(random.Random(seed), star_count, cam_x, cam_z, width_world, height_world, pts,
+              min_u=star_min_u, planet_keepout=planet_keepout)
 
     scene = bpy.context.scene
     scene.render.resolution_x = width_px
@@ -147,6 +167,7 @@ def render_frame(out_path, width_px, height_px, anchor_u, width_world, cx, cz, p
     scene.render.filepath = out_path
     bpy.ops.render.render(write_still=True)
     print(f"RENDERED {out_path}")
+    print(f"TRIANGLES {os.path.basename(out_path)} render: {tri_count()}")
 
 
 # ---- Build the scene once ----
@@ -188,12 +209,14 @@ world.color = lib_style._hex_to_linear(lib_style.PALETTE["deep_blue"])
 # ---- Icon: square frame, rocket fills ICON_FILL of the larger rocket side ----
 os.makedirs(STORE_DIR, exist_ok=True)
 icon_width = max(ext_x, ext_z) / ICON_FILL
-render_frame(ICON_PATH, 1024, 1024, 0.5, icon_width, cx, cz, pts, star_count=18, seed=7)
+render_frame(ICON_PATH, 1024, 1024, 0.5, icon_width, cx, cz, pts, star_count=10, seed=7,
+             planet_anchor=(0.91, 0.99), planet_radius_fraction=0.31, star_min_u=0.05)
 
 # ---- Feature graphic: wide frame, rocket in the right third ----
 feature_height = ext_z / FEATURE_FILL
 feature_width = feature_height * 1024 / 500
-render_frame(FEATURE_PATH, 1024, 500, FEATURE_ANCHOR_U, feature_width, cx, cz, pts, star_count=30, seed=11)
+render_frame(FEATURE_PATH, 1024, 500, FEATURE_ANCHOR_U, feature_width, cx, cz, pts, star_count=14, seed=11,
+             planet_anchor=(1.00, 1.08), planet_radius_fraction=0.34, star_min_u=0.53)
 
 clear_frame()
 print(f"OUTPUT {ICON_PATH}")

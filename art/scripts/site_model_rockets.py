@@ -39,7 +39,30 @@ for side in (-1, 1):
 
 # Two bushes against the back fence. Centre at z = 0.45 with radius 0.45 sits on the ground.
 sphere((-4.5, 2.3, 0.45), radius=0.45, material="grass_dark", segments=8, rings=4, scale=(1, 1, 0.8))
-sphere((4.3, 2.2, 0.45), radius=0.45, material="grass_dark", segments=8, rings=4, scale=(1, 1, 0.8))
+sphere((1.2, 2.2, 0.45), radius=0.45, material="grass_dark", segments=8, rings=4, scale=(1, 1, 0.8))
+
+# Backyard shed in the rear-right corner, clear of the launch tripod.
+box((4.0, 1.25, 0.62), size=(2.0, 1.8, 1.24), material="wood")
+box((4.0, 1.25, 1.30), size=(2.2, 2.0, 0.16), material="wood_dark")
+box((4.0, 0.33, 0.42), size=(0.48, 0.04, 0.78), material="wood_dark")
+box((4.62, 0.33, 0.88), size=(0.46, 0.04, 0.34), material="glass")
+box((4.0, 1.25, 1.48), size=(2.2, 2.0, 0.12), material="red")
+
+# Work table and a few simple tools along the left side of the lawn.
+box((-3.65, -0.35, 0.64), size=(1.6, 0.75, 0.12), material="wood")
+for x in (-4.30, -3.00):
+    for y in (-0.62, -0.08):
+        box((x, y, 0.31), size=(0.08, 0.08, 0.62), material="wood_dark")
+# A metal wrench and a small hammer on the tabletop.
+box((-3.92, -0.35, 0.73), size=(0.55, 0.07, 0.04), material="metal_light", rot=(0, 0, 25))
+cylinder((-3.32, -0.35, 0.75), radius=0.025, height=0.30, material="metal_dark", segments=6,
+         rot=(0, 90, 0))
+box((-3.32, -0.35, 0.90), size=(0.20, 0.07, 0.06), material="metal_light")
+
+# A coiled garden hose beside the table.
+torus((-4.65, -1.25, 0.035), major_radius=0.42, minor_radius=0.035, material="grass_dark",
+      major_segments=16, minor_segments=4)
+box((-4.20, -1.25, 0.055), size=(0.16, 0.10, 0.08), material="metal_dark")
 
 # Launch tripod: three legs meet at (0, 0, 1.2). Base radius 0.5 m.
 LEG_R = 0.5
