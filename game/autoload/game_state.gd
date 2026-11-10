@@ -26,6 +26,8 @@ var owned_research: Dictionary = {}
 var last_seen_unix: float = 0.0
 ## Offline earnings waiting to be claimed. Not saved. Keys: seconds_counted, revenue.
 var pending_offline: Dictionary = {}
+## Player settings: music, sfx, haptics. Saved. Not reset in new_game().
+var settings: Dictionary = {"music": true, "sfx": true, "haptics": true}
 
 
 func _ready() -> void:
@@ -61,6 +63,16 @@ func to_dict() -> Dictionary:
 ## Replace all state with values from a saved Dictionary. Missing keys keep defaults.
 func from_dict(data: Dictionary) -> void:
 	StateCodec.apply_dict(self, data)
+
+
+## Store one setting value. Keys: music, sfx, haptics.
+func set_setting(key: String, on: bool) -> void:
+	settings[key] = on
+
+
+## Rename the company. The caller trims and checks the text.
+func set_company_name(name_text: String) -> void:
+	company_name = name_text
 
 
 ## Buy a research node with revenue. Returns false and changes nothing when the node

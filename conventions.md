@@ -76,6 +76,8 @@ To learn a function signature, Grep `^static func` in the file. Do not read the 
 - `main.gd` gives the part a full-rect layout in its area. HUD parts must set `mouse_filter = MOUSE_FILTER_IGNORE` on themselves and on containers that only do layout, so that taps reach the controls below.
 - Popups are not parts. A popup is a Control class that the code shows with the popup host.
 
+The 3D world works the same way. `game/scenes/world/world.gd` (class `World`) adds a world part when its script exists; the paths are in its `WORLD_PARTS` constant. A world part `extends Node` or `Node3D`, finds the world with `get_parent() as World`, and uses `World.vehicle()`, `World.camera()`, `World.current_stage()`. Do not edit `world.gd`. The `Flight` part (`game/scenes/world/flight.gd`) has the signals `lifted_off(id)` and `landed(id, revenue, apogee)`.
+
 ## Parallel work
 
 Other agents may work in this tree at the same time. If `verify.ps1` fails only because of an error in a file that is NOT on your card, do not edit that file. Wait 30 seconds and run verify again (two retries at most). If it still fails, report it under NOTES and finish.

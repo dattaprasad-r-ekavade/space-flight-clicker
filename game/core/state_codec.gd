@@ -20,6 +20,7 @@ static func to_dict(gs: Node) -> Dictionary:
 	data["company_name"] = str(gs.get("company_name"))
 	data["selected_division"] = str(gs.get("selected_division"))
 	data["owned_research"] = (gs.get("owned_research") as Dictionary).duplicate()
+	data["settings"] = (gs.get("settings") as Dictionary).duplicate()
 	data["divisions"] = _divisions_to_dict(gs)
 	return data
 
@@ -38,10 +39,21 @@ static func apply_dict(gs: Node, data: Dictionary) -> void:
 		gs.set("company_name", str(data["company_name"]))
 	if data.has("owned_research") and typeof(data["owned_research"]) == TYPE_DICTIONARY:
 		gs.set("owned_research", (data["owned_research"] as Dictionary).duplicate())
+	if data.has("settings") and typeof(data["settings"]) == TYPE_DICTIONARY:
+		_apply_settings(gs, data["settings"] as Dictionary)
 	if data.has("selected_division"):
 		_apply_selected(gs, str(data["selected_division"]))
 	if data.has("divisions") and typeof(data["divisions"]) == TYPE_DICTIONARY:
 		_apply_divisions(gs, data["divisions"] as Dictionary)
+
+
+## Copy saved setting values onto the defaults. Only keys that already exist are used.
+static func _apply_settings(gs: Node, saved: Dictionary) -> void:
+	var current: Dictionary = (gs.get("settings") as Dictionary).duplicate()
+	for key: String in current.keys():
+		if saved.has(key):
+			current[key] = bool(saved[key])
+	gs.set("settings", current)
 
 
 static func _divisions_to_dict(gs: Node) -> Dictionary:

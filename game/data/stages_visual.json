@@ -1,0 +1,65 @@
+{
+	"bottles": {
+		"sky_top": "#4FA8E0",
+		"sky_bottom": "#BFE6F7",
+		"star_amount": 0.0,
+		"trail": "puff",
+		"trail_color": "#FFFFFF"
+	},
+	"model_rockets": {
+		"sky_top": "#3F95D8",
+		"sky_bottom": "#B8E2F6",
+		"star_amount": 0.0,
+		"trail": "smoke",
+		"trail_color": "#D3D3D3"
+	},
+	"sounding": {
+		"sky_top": "#2A6FB8",
+		"sky_bottom": "#9FD0EE",
+		"star_amount": 0.1,
+		"trail": "smoke",
+		"trail_color": "#C8C8C8"
+	},
+	"orbital": {
+		"sky_top": "#0F2F63",
+		"sky_bottom": "#6CB5E3",
+		"star_amount": 0.3,
+		"trail": "flame",
+		"trail_color": "#FF8C1A"
+	},
+	"station": {
+		"sky_top": "#05070F",
+		"sky_bottom": "#1A3F7A",
+		"star_amount": 0.7,
+		"trail": "flame",
+		"trail_color": "#FF8C1A"
+	},
+	"moon": {
+		"sky_top": "#07040F",
+		"sky_bottom": "#1E1638",
+		"star_amount": 1.0,
+		"trail": "flame",
+		"trail_color": "#FF7A10"
+	},
+	"solar": {
+		"sky_top": "#050614",
+		"sky_bottom": "#2A1B55",
+		"star_amount": 1.0,
+		"trail": "plasma",
+		"trail_color": "#35E0FF"
+	},
+	"galaxy": {
+		"sky_top": "#03020A",
+		"sky_bottom": "#2B1047",
+		"star_amount": 1.0,
+		"trail": "warp",
+		"trail_color": "#CFFBFF"
+	},
+	"black_hole": {
+		"sky_top": "#000000",
+		"sky_bottom": "#140826",
+		"star_amount": 1.0,
+		"trail": "warp",
+		"trail_color": "#E8FFFF"
+	}
+}
