@@ -23,6 +23,9 @@ const CAM_POS: Vector3 = Vector3(0.0, 6.0, 34.0)
 const CAM_LOOK_AT: Vector3 = Vector3(0.0, -4.0, 0.0)
 ## Vehicles are modelled 2 m tall. The sites are built for a larger vehicle, so scale it up.
 const VEHICLE_SCALE: float = 2.2
+## Extra scale for vehicles that are small in real life (a bottle, a model rocket).
+const SMALL_VEHICLES: Dictionary = {"bottles": 0.3, "model_rockets": 0.55}
+var _current_stage_for_scale: String = ""
 const CAM_FOV: float = 40.0
 
 const SKY_COLOR: Color = Color("87CEEB")
@@ -63,6 +66,7 @@ func set_stage(id: String) -> void:
 	_clear(_vehicle_root)
 	_stage = id
 	_add_model(_site_root, SITE_PATH_FORMAT % id, false)
+	_current_stage_for_scale = id
 	_add_model(_vehicle_root, VEHICLE_PATH_FORMAT % id, true)
 
 
@@ -135,7 +139,10 @@ func _add_model(root: Node3D, path: String, is_vehicle: bool) -> void:
 	if ResourceLoader.exists(path):
 		var scene: PackedScene = load(path) as PackedScene
 		if scene != null:
-			root.add_child(scene.instantiate())
+			var model: Node3D = scene.instantiate() as Node3D
+			if is_vehicle and model != null:
+				model.scale = Vector3.ONE * float(SMALL_VEHICLES.get(_current_stage_for_scale, 1.0))
+			root.add_child(model)
 			return
 	if is_vehicle:
 		root.add_child(_placeholder_vehicle())

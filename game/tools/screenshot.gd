@@ -19,6 +19,8 @@ func _run(folder: String) -> void:
 	DirAccess.make_dir_recursive_absolute(folder)
 	if _arg("--state=") == "mid":
 		_prepare_mid_state()
+	elif _arg("--state=") == "new":
+		_prepare_new_state()
 	var main: Node = get_parent()
 	var strip: Node = main.find_child("TabStrip", true, false)
 	var tab_count: int = 5
@@ -48,6 +50,16 @@ func _prepare_mid_state() -> void:
 		GameState.pump("sounding")
 	EventBus.state_loaded.emit()
 	EventBus.revenue_changed.emit(GameState.revenue)
+
+
+## A fresh game, one bottle level, with a launch in progress.
+func _prepare_new_state() -> void:
+	GameState.new_game()
+	GameState.buy_levels("bottles", 1)
+	EventBus.state_loaded.emit()
+	for i: int in range(5):
+		GameState.pump("bottles")
+	GameState.launch("bottles")
 
 
 func _settle() -> void:
