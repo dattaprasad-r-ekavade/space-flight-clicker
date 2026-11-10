@@ -108,104 +108,48 @@ func buy_levels(id: String, count: int) -> bool:
 	return true
 
 
-## Add one pump tap to a division's fuel bar. While a managed flight runs, a tap speeds it up instead.
-## Returns false when no tap was added.
+## --- Launch cycle. The logic is in game/core/launch_ops.gd. ---
+
 func pump(id: String) -> bool:
-	if not divisions.has(id):
-		return false
-	if bool(divisions[id]["has_manager"]) and bool(divisions[id]["flying"]):
-		return _speed_up(id)
-	var taps: int = _pump_taps(id)
-	if not LaunchCycle.can_pump(divisions[id], taps):
-		return false
-	_apply_state(id, LaunchCycle.pump(divisions[id], taps))
-	_emit_bus("division_changed", [id])
-	return true
+	return LaunchOps.pump(self, id)
 
 
-## Buy the manager of a division. Returns false and changes nothing when the division
-## is at level 0, already managed, or revenue is too low.
-func buy_manager(id: String) -> bool:
-	if not divisions.has(id):
-		return false
-	var cost: float = Economy.manager_cost(division_data[id])
-	if not LaunchCycle.can_buy_manager(divisions[id], cost, revenue):
-		return false
-	revenue -= cost
-	_apply_state(id, LaunchCycle.buy_manager(divisions[id], _pump_taps(id)))
-	_emit_bus("revenue_changed", [revenue])
-	_emit_bus("division_changed", [id])
-	return true
-
-
-## Revenue per second summed over all managed divisions at their current levels.
-func income_per_second() -> float:
-	var total: float = 0.0
-	for id: String in division_order:
-		var state: Dictionary = divisions[id]
-		var level: int = int(state["level"])
-		var div: Dictionary = division_data[id]
-		var per_launch: float = Economy.launch_revenue(div, level, _research_mult(id), _global_mult())
-		var flight: float = Economy.flight_time(div, level, _flight_mult())
-		total += LaunchCycle.income_rate(level, bool(state["has_manager"]), per_launch, flight)
-	return total
-
-
-## Cut the remaining time of a managed flight. Returns false when no flight is running.
-func _speed_up(id: String) -> bool:
-	if not bool(divisions[id]["flying"]):
-		return false
-	var flight: float = Economy.flight_time(division_data[id], int(divisions[id]["level"]), _flight_mult())
-	_apply_state(id, LaunchCycle.speed_up(divisions[id], flight))
-	_emit_bus("division_changed", [id])
-	return true
-
-
-## True when the fuel bar of a division is full and no flight is running.
 func can_launch(id: String) -> bool:
-	if not divisions.has(id):
-		return false
-	return LaunchCycle.can_launch(divisions[id], _pump_taps(id))
+	return LaunchOps.can_launch(self, id)
 
 
-## Start a flight for a division. Returns false when the bar is not full.
 func launch(id: String) -> bool:
-	if not can_launch(id):
-		return false
-	_apply_state(id, LaunchCycle.launch(divisions[id], _pump_taps(id)))
-	_emit_bus("launch_started", [id])
-	return true
+	return LaunchOps.launch(self, id)
 
 
-## Advance all flights by `delta` seconds. Pays for every flight that finishes.
 func tick(delta: float) -> void:
-	for id: String in division_order:
-		if not bool(divisions[id]["flying"]):
-			continue
-		var level: int = int(divisions[id]["level"])
-		var flight: float = Economy.flight_time(division_data[id], level, _flight_mult())
-		var result: Dictionary = LaunchCycle.advance(divisions[id], delta, flight, _pump_taps(id))
-		_apply_state(id, result["state"])
-		var finished: int = int(result["finished"])
-		if finished > 0:
-			_pay_flights(id, finished)
+	LaunchOps.tick(self, delta)
 
 
-## Pay for `count` finished flights of a division at its current level.
-func _pay_flights(id: String, count: int) -> void:
-	var div: Dictionary = division_data[id]
-	var level: int = int(divisions[id]["level"])
-	var per_flight: float = Economy.launch_revenue(div, level, _research_mult(id), _global_mult())
-	var apogee: float = Economy.apogee(div, level)
-	var earned: float = per_flight * float(count)
-	revenue += earned
-	run_revenue += earned
-	lifetime_height += apogee * float(count)
-	for i: int in range(count):
-		_emit_bus("launch_finished", [id, per_flight, apogee])
-	if apogee > record_height:
-		record_height = apogee
-		_emit_bus("record_height_changed", [record_height])
+func buy_manager(id: String) -> bool:
+	return LaunchOps.buy_manager(self, id)
+
+
+func manager_cost(id: String) -> float:
+	return Economy.manager_cost(division_data[id])
+
+
+func income_per_second() -> float:
+	return LaunchOps.income_per_second(self)
+
+
+func revenue_per_launch(id: String) -> float:
+	return LaunchOps.revenue_per_launch(self, id)
+
+
+func flight_time(id: String) -> float:
+	return LaunchOps.flight_time(self, id)
+
+
+## Add earned revenue. Every income source must use this, so run_revenue stays correct.
+func add_revenue(amount: float) -> void:
+	revenue += amount
+	run_revenue += amount
 	_emit_bus("revenue_changed", [revenue])
 
 

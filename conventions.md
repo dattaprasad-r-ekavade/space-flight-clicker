@@ -105,7 +105,9 @@ powershell -ExecutionPolicy Bypass -File tools/verify.ps1
 6. Never open `.glb`, `.import`, `.godot/`, `.png` (except one Blender preview), or `user://` files.
 7. Run `verify.ps1` at most three times in one task. It prints only failures and a summary. Do not run Godot with `--verbose`.
 8. No `.gd` file may grow above 300 lines. If your change would pass that limit, stop and report so that the Lead can split the file.
-9. `game_state.gd` holds state and thin methods only. Put rules and maths in a `game/core/` file.
+9. `game_state.gd` holds state fields and one-line methods only. For a feature that changes state, write `game/core/<feature>_ops.gd` with static functions that take the GameState node `gs` as the first argument (untyped). Copy the pattern from `game/core/launch_ops.gd`. Then add one-line methods to `game_state.gd` that call them. Pure maths with no state goes in its own `game/core/` file. A card may add at most 15 lines to `game_state.gd`.
+   - Add income only with `gs.add_revenue(amount)`. Read values with `gs.revenue_per_launch(id)`, `gs.flight_time(id)`, `gs.income_per_second()`.
+   - New saved fields must also be added to `game/core/state_codec.gd` (add it to your Files if the card does not list it) and reset in `new_game()`.
 10. If you are far into a task and it is still growing, stop and report `blocked` with what is done. A second agent continues from your report.
 
 ## Task rules for agents
