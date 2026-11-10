@@ -19,6 +19,8 @@ func _run(folder: String) -> void:
 	DirAccess.make_dir_recursive_absolute(folder)
 	if _arg("--state=") == "mid":
 		_prepare_mid_state()
+	elif _arg("--state=") == "late":
+		_prepare_late_state()
 	elif _arg("--state=") == "new":
 		_prepare_new_state()
 	var main: Node = get_parent()
@@ -60,6 +62,20 @@ func _prepare_new_state() -> void:
 	for i: int in range(5):
 		GameState.pump("bottles")
 	GameState.launch("bottles")
+
+
+## Every stage at level 25 with managers; the black hole stage is selected.
+func _prepare_late_state() -> void:
+	GameState.new_game()
+	for id: String in GameState.division_order:
+		GameState.revenue = 1.0e30
+		GameState.buy_levels(id, 25)
+		GameState.buy_manager(id)
+	GameState.echoes = 120
+	GameState.select_division("black_hole")
+	GameState.revenue = 4.2e18
+	EventBus.state_loaded.emit()
+	EventBus.revenue_changed.emit(GameState.revenue)
 
 
 func _settle() -> void:

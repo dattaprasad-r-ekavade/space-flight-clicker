@@ -214,8 +214,8 @@ Tick the **Done** box here when the Lead has committed the card.
 | [x] | [T057](tasks/T057.md) | Flight animation | godot-builder | T055 |
 | [x] | [T058](tasks/T058.md) | Particle trails | godot-builder | T057 |
 | [x] | [T059](tasks/T059.md) | Kid and pump animation | godot-builder | T055, T050 |
-| [ ] | [T060](tasks/T060.md) | Black hole | Lead | T056 |
-| [ ] | [T061](tasks/T061.md) | Prestige cinematic | godot-builder | T060, T059 |
+| [x] | [T060](tasks/T060.md) | Black hole | Lead | T056 |
+| [x] | [T061](tasks/T061.md) | Prestige cinematic | godot-builder | T060, T059 |
 | [x] | [T062](tasks/T062.md) | Juice pass | godot-builder | T057, T023 |
 
 **Gate 3:** Lead reviews screenshots of all nine stages. Human checks frame rate.
@@ -228,13 +228,13 @@ Tick the **Done** box here when the Lead has committed the card.
 | [x] | [T071a](tasks/T071a.md) | Echo Shop: data and buying | godot-builder | T070 |
 | [x] | [T071b](tasks/T071b.md) | Echo Shop effects, part 1 | godot-builder | T071a |
 | [x] | [T071c](tasks/T071c.md) | Echo Shop effects, part 2 | godot-builder | T071b |
-| [ ] | [T072](tasks/T072.md) | Echoes tab and prestige screen | godot-builder | T071c, T061 |
+| [x] | [T072](tasks/T072.md) | Echoes tab and prestige screen | godot-builder | T071c, T061 |
 | [x] | [T073](tasks/T073.md) | Lifetime milestones | godot-builder | T070 |
-| [ ] | [T074](tasks/T074.md) | Boosts | godot-builder | T027 |
-| [ ] | [T075](tasks/T075.md) | Daily reward | godot-builder | T027 |
-| [ ] | [T076](tasks/T076.md) | Contracts | godot-builder | T075 |
-| [ ] | [T077](tasks/T077.md) | Stats, lives, and cosmetics | godot-builder | T071c, T051 |
-| [ ] | [T078](tasks/T078.md) | First-time guidance | godot-builder | T024 |
+| [x] | [T074](tasks/T074.md) | Boosts | godot-builder | T027 |
+| [x] | [T075](tasks/T075.md) | Daily reward | godot-builder | T027 |
+| [x] | [T076](tasks/T076.md) | Contracts | godot-builder | T075 |
+| [x] | [T077](tasks/T077.md) | Stats, lives, and cosmetics | godot-builder | T071c, T051 |
+| [x] | [T078](tasks/T078.md) | First-time guidance | godot-builder | T024 |
 
 **Gate 4:** Lead repeats T018 with the Echo Shop. Human plays a full life with the debug time speed.
 
