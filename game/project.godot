@@ -30,6 +30,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://locale/strings.en.translation")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
