@@ -3,7 +3,8 @@
 # Report: reports/<id>.md
 param(
     [Parameter(Mandatory = $true)][string]$TaskId,
-    [string]$Model = ""
+    [string]$Model = "",
+    [string]$Extra = ""
 )
 
 $repo = Split-Path -Parent $PSScriptRoot
@@ -19,6 +20,7 @@ $godotData = Join-Path $env:APPDATA "Godot"
 New-Item -ItemType Directory -Force $godotData | Out-Null
 
 $prompt = "Do task $TaskId. Follow AGENTS.md. Your card is tasks/$TaskId.md."
+if ($Extra -ne "") { $prompt = "$prompt $Extra" }
 
 $codexArgs = @("exec", "-s", "workspace-write", "-C", $repo, "--add-dir", $godotData, "-o", $report)
 if ($Model -ne "") { $codexArgs += @("-m", $Model) }

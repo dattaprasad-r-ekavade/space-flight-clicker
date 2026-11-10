@@ -1,6 +1,6 @@
 extends Node
 ## Holds all mutable game state. UI reads this and calls its methods.
-## Formulas live in game/core/economy.gd.
+## Formulas live in game/core/economy.gd. Launch cycle rules live in game/core/launch_cycle.gd.
 
 const FIRST_DIVISION_ID: String = "bottles"
 
@@ -27,11 +27,15 @@ func _ready() -> void:
 	new_game()
 
 
-## Reset the life state to a new game.
+## Reset all state to a fresh-install value.
 func new_game() -> void:
 	if division_order.is_empty():
 		_load_division_data()
 	revenue = 0.0
+	run_revenue = 0.0
+	record_height = 0.0
+	lifetime_height = 0.0
+	echoes = 0
 	life = 1
 	company_name = tr("Bottle Rocket Co.")
 	selected_division = FIRST_DIVISION_ID
@@ -56,7 +60,7 @@ func select_division(id: String) -> bool:
 	if not is_unlocked(id):
 		return false
 	selected_division = id
-	_emit_bus("division_changed", id)
+	_emit_bus("division_changed", [id])
 	return true
 
 
@@ -72,10 +76,93 @@ func buy_levels(id: String, count: int) -> bool:
 		return false
 	revenue -= cost
 	state["level"] = level + count
-	_emit_bus("revenue_changed", revenue)
-	_emit_bus("division_changed", id)
+	_emit_bus("revenue_changed", [revenue])
+	_emit_bus("division_changed", [id])
 	_emit_unlock_if_crossed(id, level, level + count)
 	return true
+
+
+## Add one pump tap to a division's fuel bar. Returns false when no tap was added.
+func pump(id: String) -> bool:
+	if not divisions.has(id):
+		return false
+	var taps: int = _pump_taps(id)
+	if not LaunchCycle.can_pump(divisions[id], taps):
+		return false
+	_apply_state(id, LaunchCycle.pump(divisions[id], taps))
+	return true
+
+
+## True when the fuel bar of a division is full and no flight is running.
+func can_launch(id: String) -> bool:
+	if not divisions.has(id):
+		return false
+	return LaunchCycle.can_launch(divisions[id], _pump_taps(id))
+
+
+## Start a flight for a division. Returns false when the bar is not full.
+func launch(id: String) -> bool:
+	if not can_launch(id):
+		return false
+	_apply_state(id, LaunchCycle.launch(divisions[id], _pump_taps(id)))
+	_emit_bus("launch_started", [id])
+	return true
+
+
+## Advance all flights by `delta` seconds. Pays for every flight that finishes.
+func tick(delta: float) -> void:
+	for id: String in division_order:
+		if not bool(divisions[id]["flying"]):
+			continue
+		var level: int = int(divisions[id]["level"])
+		var flight: float = Economy.flight_time(division_data[id], level, _flight_mult())
+		var result: Dictionary = LaunchCycle.advance(divisions[id], delta, flight, _pump_taps(id))
+		_apply_state(id, result["state"])
+		var finished: int = int(result["finished"])
+		if finished > 0:
+			_pay_flights(id, finished)
+
+
+## Pay for `count` finished flights of a division at its current level.
+func _pay_flights(id: String, count: int) -> void:
+	var div: Dictionary = division_data[id]
+	var level: int = int(divisions[id]["level"])
+	var per_flight: float = Economy.launch_revenue(div, level, _research_mult(id), _global_mult())
+	var apogee: float = Economy.apogee(div, level)
+	var earned: float = per_flight * float(count)
+	revenue += earned
+	run_revenue += earned
+	lifetime_height += apogee * float(count)
+	for i: int in range(count):
+		_emit_bus("launch_finished", [id, per_flight, apogee])
+	if apogee > record_height:
+		record_height = apogee
+		_emit_bus("record_height_changed", [record_height])
+	_emit_bus("revenue_changed", [revenue])
+
+
+## Pump taps needed for one launch. Research may lower this later.
+func _pump_taps(id: String) -> int:
+	return int(division_data[id]["pump_taps"])
+
+
+## Research multiplier for a division. Neutral until research is built.
+func _research_mult(_id: String) -> float:
+	return 1.0
+
+
+## Multiplier for all revenue. Neutral until global boosts are built.
+func _global_mult() -> float:
+	return 1.0
+
+
+## Multiplier for flight time. Neutral until faster flights are built.
+func _flight_mult() -> float:
+	return 1.0
+
+
+func _apply_state(id: String, next: Dictionary) -> void:
+	divisions[id].merge(next, true)
 
 
 func _emit_unlock_if_crossed(id: String, old_level: int, new_level: int) -> void:
@@ -83,17 +170,17 @@ func _emit_unlock_if_crossed(id: String, old_level: int, new_level: int) -> void
 		return
 	var next_index: int = division_order.find(id) + 1
 	if next_index < division_order.size():
-		_emit_bus("stage_unlocked", division_order[next_index])
+		_emit_bus("stage_unlocked", [division_order[next_index]])
 
 
-## Emit a one-argument signal on the EventBus autoload.
+## Emit a signal on the EventBus autoload with the given arguments.
 ## Does nothing when this node is not in the scene tree (for example in tests).
-func _emit_bus(signal_name: String, value: Variant) -> void:
+func _emit_bus(signal_name: String, args: Array) -> void:
 	if not is_inside_tree():
 		return
 	var bus: Node = get_node_or_null("/root/EventBus")
 	if bus != null:
-		bus.emit_signal(signal_name, value)
+		bus.callv("emit_signal", [signal_name] + args)
 
 
 func _new_division_state() -> Dictionary:
