@@ -20,6 +20,8 @@ var division_order: Array[String] = []
 ## Per-division state, keyed by division id.
 ## Each value: {level, has_manager, fuel_taps, cycle_elapsed, flying}
 var divisions: Dictionary = {}
+## Research bought this life, id -> true. Reset on new game.
+var owned_research: Dictionary = {}
 
 
 func _ready() -> void:
@@ -40,8 +42,22 @@ func new_game() -> void:
 	company_name = tr("Bottle Rocket Co.")
 	selected_division = FIRST_DIVISION_ID
 	divisions = {}
+	owned_research = {}
 	for id: String in division_order:
 		divisions[id] = _new_division_state()
+
+
+## Buy a research node with revenue. Returns false and changes nothing when the node
+## is unknown, owned, locked by stage, or too expensive.
+func buy_research(id: String) -> bool:
+	var node: Dictionary = Research.find(id)
+	var stage_ok: bool = not node.is_empty() and is_unlocked(str(node["requires_stage"]))
+	if not Research.can_buy(node, owned_research, stage_ok, revenue):
+		return false
+	revenue -= float(node["cost"])
+	owned_research[id] = true
+	_emit_bus("revenue_changed", [revenue])
+	return true
 
 
 ## True when the division can be bought. The first division is always unlocked.
@@ -185,22 +201,22 @@ func _pay_flights(id: String, count: int) -> void:
 
 ## Pump taps needed for one launch. Research may lower this later.
 func _pump_taps(id: String) -> int:
-	return int(division_data[id]["pump_taps"])
+	return Research.pump_taps(int(division_data[id]["pump_taps"]), owned_research)
 
 
-## Research multiplier for a division. Neutral until research is built.
-func _research_mult(_id: String) -> float:
-	return 1.0
+## Research multiplier for a division.
+func _research_mult(id: String) -> float:
+	return Research.revenue_mult(owned_research, id)
 
 
-## Multiplier for all revenue. Neutral until global boosts are built.
+## Multiplier for all revenue from owned global research.
 func _global_mult() -> float:
-	return 1.0
+	return Research.global_mult(owned_research)
 
 
-## Multiplier for flight time. Neutral until faster flights are built.
+## Multiplier for flight time from owned faster-flight research.
 func _flight_mult() -> float:
-	return 1.0
+	return Research.flight_mult(owned_research)
 
 
 func _apply_state(id: String, next: Dictionary) -> void:
