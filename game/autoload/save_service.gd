@@ -30,6 +30,7 @@ func save() -> bool:
 	var gs: Node = _autoload("GameState")
 	if gs == null:
 		return false
+	gs.set("last_seen_unix", _now())
 	var state: Dictionary = gs.call("to_dict")
 	return save_state(state)
 
@@ -41,6 +42,7 @@ func load_game() -> bool:
 	if gs == null or state.is_empty():
 		return false
 	gs.call("from_dict", state)
+	gs.call("compute_pending_offline", _now())
 	return true
 
 

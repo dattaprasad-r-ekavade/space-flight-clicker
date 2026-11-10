@@ -22,6 +22,10 @@ var division_order: Array[String] = []
 var divisions: Dictionary = {}
 ## Research bought this life, id -> true. Reset on new game.
 var owned_research: Dictionary = {}
+## Unix time of the last save. Offline earnings count from this time. Saved.
+var last_seen_unix: float = 0.0
+## Offline earnings waiting to be claimed. Not saved. Keys: seconds_counted, revenue.
+var pending_offline: Dictionary = {}
 
 
 func _ready() -> void:
@@ -43,6 +47,8 @@ func new_game() -> void:
 	selected_division = FIRST_DIVISION_ID
 	divisions = {}
 	owned_research = {}
+	last_seen_unix = 0.0
+	pending_offline = {}
 	for id: String in division_order:
 		divisions[id] = _new_division_state()
 
@@ -152,6 +158,16 @@ func add_revenue(amount: float) -> void:
 	run_revenue += amount
 	_emit_bus("revenue_changed", [revenue])
 
+
+## Offline earnings. Logic lives in game/core/offline_ops.gd.
+func offline_cap_seconds() -> float:
+	return 4 * 3600.0
+
+func compute_pending_offline(now_unix: float) -> void:
+	OfflineOps.compute_pending(self, now_unix)
+
+func claim_offline(multiplier: float) -> float:
+	return OfflineOps.claim(self, multiplier)
 
 ## Pump taps needed for one launch. Research may lower this later.
 func _pump_taps(id: String) -> int:

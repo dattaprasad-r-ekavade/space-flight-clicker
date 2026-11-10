@@ -3,7 +3,7 @@ extends RefCounted
 ## Converts GameState values to and from a plain Dictionary for saving.
 ## Holds no state. It only reads and writes the properties of the GameState node it is given.
 
-const FLOAT_KEYS: PackedStringArray = ["revenue", "run_revenue", "record_height", "lifetime_height"]
+const FLOAT_KEYS: PackedStringArray = ["revenue", "run_revenue", "record_height", "lifetime_height", "last_seen_unix"]
 const INT_KEYS: PackedStringArray = ["echoes", "life"]
 const DIVISION_INT_KEYS: PackedStringArray = ["level", "fuel_taps"]
 const DIVISION_FLOAT_KEYS: PackedStringArray = ["cycle_elapsed"]
