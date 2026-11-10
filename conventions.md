@@ -59,6 +59,12 @@ tools/verify.ps1       Runs import + tests + smoke run. Must pass before a task 
 | `Economy` | `game/core/economy.gd` | Static formulas: `apogee`, `level_cost`, `bulk_cost`, `max_affordable`, `level_mult`, `flight_time`, `launch_revenue`, `manager_cost` |
 | `NumFormat` | `game/core/formatter.gd` | `NumFormat.money(v)`, `NumFormat.height(metres)`, `NumFormat.duration(seconds)` |
 | `TestRunner` | `game/tests/run_tests.gd` | Test assertions |
+| `LaunchOps`, `OfflineOps` | `game/core/*_ops.gd` | The pattern for state-changing features |
+| `Research` | `game/core/research.gd` | `Research.nodes()`, `find(id)`, multipliers |
+| `UiTheme` | `game/scenes/ui/ui_theme.gd` | `UiTheme.build()` and colour / size constants (`BG`, `PANEL`, `ACCENT`, `TEXT`, `TEXT_DIM`, `FONT_BODY`, `PAD`, `TOUCH`, …) |
+| `BigButton`, `PanelCard`, `FillBar`, `TabStrip` | `game/scenes/ui/kit/` | UI kit. Use these in every UI file; do not style raw controls by hand |
+
+UI files reach the game through the autoloads `GameState` and `EventBus` (for example `GameState.buy_levels(id, 1)`, `EventBus.revenue_changed.connect(...)`). To see the GameState methods, Grep `^func [a-z]` in `game/autoload/game_state.gd`. To see the signals, read `game/autoload/event_bus.gd`.
 
 To learn a function signature, Grep `^static func` in the file. Do not read the whole file.
 
